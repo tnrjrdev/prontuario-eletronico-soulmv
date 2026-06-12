@@ -1,0 +1,8 @@
+target
+web
+docs
+storage
+.git
+.idea
+*.iml
+/tmp

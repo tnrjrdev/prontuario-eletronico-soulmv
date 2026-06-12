@@ -1,0 +1,4 @@
+com\soulmv\hospitalar\service\AtendimentoServiceTest.class
+com\soulmv\hospitalar\integration\AuthFlowIntegrationTest.class
+com\soulmv\hospitalar\service\ContaServiceTest.class
+com\soulmv\hospitalar\service\UsuarioServiceTest.class

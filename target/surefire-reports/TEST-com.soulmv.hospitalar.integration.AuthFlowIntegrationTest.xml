@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.soulmv.hospitalar.integration.AuthFlowIntegrationTest" time="54.526" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="F:\Dev\Prontuario_eletronico\target\test-classes;F:\Dev\Prontuario_eletronico\target\classes;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.3.0\spring-boot-starter-data-jpa-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.3.0\spring-boot-starter-aop-3.3.0.jar;C:\Users\taryj\.m2\repository\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.3.0\spring-boot-starter-jdbc-3.3.0.jar;C:\Users\taryj\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-jdbc\6.1.8\spring-jdbc-6.1.8.jar;C:\Users\taryj\.m2\repository\org\hibernate\orm\hibernate-core\6.5.2.Final\hibernate-core-6.5.2.Final.jar;C:\Users\taryj\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\taryj\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\taryj\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\taryj\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\taryj\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\taryj\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\taryj\.m2\repository\net\bytebuddy\byte-buddy\1.14.16\byte-buddy-1.14.16.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\taryj\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\taryj\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\taryj\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\taryj\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\taryj\.m2\repository\org\springframework\data\spring-data-jpa\3.3.0\spring-data-jpa-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\data\spring-data-commons\3.3.0\spring-data-commons-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-orm\6.1.8\spring-orm-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-context\6.1.8\spring-context-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-tx\6.1.8\spring-tx-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-beans\6.1.8\spring-beans-6.1.8.jar;C:\Users\taryj\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\taryj\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-aspects\6.1.8\spring-aspects-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.0\spring-boot-starter-web-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.0\spring-boot-starter-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.0\spring-boot-starter-logging-3.3.0.jar;C:\Users\taryj\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\taryj\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\taryj\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\taryj\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\taryj\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\taryj\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.0\spring-boot-starter-json-3.3.0.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.0\spring-boot-starter-tomcat-3.3.0.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.24\tomcat-embed-core-10.1.24.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.24\tomcat-embed-websocket-10.1.24.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-web\6.1.8\spring-web-6.1.8.jar;C:\Users\taryj\.m2\repository\io\micrometer\micrometer-observation\1.13.0\micrometer-observation-1.13.0.jar;C:\Users\taryj\.m2\repository\io\micrometer\micrometer-commons\1.13.0\micrometer-commons-1.13.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-webmvc\6.1.8\spring-webmvc-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-expression\6.1.8\spring-expression-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.3.0\spring-boot-starter-validation-3.3.0.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.24\tomcat-embed-el-10.1.24.jar;C:\Users\taryj\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\taryj\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.3.0\spring-boot-starter-security-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-aop\6.1.8\spring-aop-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-config\6.3.0\spring-security-config-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-web\6.3.0\spring-security-web-6.3.0.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-api\0.12.6\jjwt-api-0.12.6.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-impl\0.12.6\jjwt-impl-0.12.6.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.12.6\jjwt-jackson-0.12.6.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.6.0\springdoc-openapi-starter-webmvc-ui-2.6.0.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.6.0\springdoc-openapi-starter-webmvc-api-2.6.0.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.6.0\springdoc-openapi-starter-common-2.6.0.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.22\swagger-core-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.22\swagger-annotations-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.22\swagger-models-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.17.1\jackson-dataformat-yaml-2.17.1.jar;C:\Users\taryj\.m2\repository\org\webjars\swagger-ui\5.17.14\swagger-ui-5.17.14.jar;C:\Users\taryj\.m2\repository\org\mapstruct\mapstruct\1.6.3\mapstruct-1.6.3.jar;C:\Users\taryj\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\taryj\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\taryj\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\taryj\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-devtools\3.3.0\spring-boot-devtools-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot\3.3.0\spring-boot-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.0\spring-boot-autoconfigure-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.3.0\spring-boot-starter-test-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-test\3.3.0\spring-boot-test-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.3.0\spring-boot-test-autoconfigure-3.3.0.jar;C:\Users\taryj\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\taryj\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\taryj\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\taryj\.m2\repository\net\minidev\json-smart\2.5.1\json-smart-2.5.1.jar;C:\Users\taryj\.m2\repository\net\minidev\accessors-smart\2.5.1\accessors-smart-2.5.1.jar;C:\Users\taryj\.m2\repository\org\ow2\asm\asm\9.6\asm-9.6.jar;C:\Users\taryj\.m2\repository\org\assertj\assertj-core\3.25.3\assertj-core-3.25.3.jar;C:\Users\taryj\.m2\repository\org\awaitility\awaitility\4.2.1\awaitility-4.2.1.jar;C:\Users\taryj\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\taryj\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\taryj\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\taryj\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\taryj\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\taryj\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.16\byte-buddy-agent-1.14.16.jar;C:\Users\taryj\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\taryj\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\taryj\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\taryj\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-core\6.1.8\spring-core-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-jcl\6.1.8\spring-jcl-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-test\6.1.8\spring-test-6.1.8.jar;C:\Users\taryj\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-test\6.3.0\spring-security-test-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-core\6.3.0\spring-security-core-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-crypto\6.3.0\spring-security-crypto-6.3.0.jar;C:\Users\taryj\.m2\repository\org\testcontainers\junit-jupiter\1.20.4\junit-jupiter-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\testcontainers\1.20.4\testcontainers-1.20.4.jar;C:\Users\taryj\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\taryj\.m2\repository\org\hamcrest\hamcrest-core\2.2\hamcrest-core-2.2.jar;C:\Users\taryj\.m2\repository\org\apache\commons\commons-compress\1.24.0\commons-compress-1.24.0.jar;C:\Users\taryj\.m2\repository\org\rnorth\duct-tape\duct-tape\1.0.8\duct-tape-1.0.8.jar;C:\Users\taryj\.m2\repository\org\jetbrains\annotations\17.0.0\annotations-17.0.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-api\3.4.0\docker-java-api-3.4.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-transport-zerodep\3.4.0\docker-java-transport-zerodep-3.4.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-transport\3.4.0\docker-java-transport-3.4.0.jar;C:\Users\taryj\.m2\repository\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar;C:\Users\taryj\.m2\repository\org\testcontainers\postgresql\1.20.4\postgresql-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\jdbc\1.20.4\jdbc-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\database-commons\1.20.4\database-commons-1.20.4.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.boot.library.path" value="F:\Program Files\Java\jdk-21\bin"/>
+    <property name="sun.java.command" value="C:\Users\taryj\AppData\Local\Temp\surefire2136233807506874120\surefirebooter-20260611225814601_3.jar C:\Users\taryj\AppData\Local\Temp\surefire2136233807506874120 2026-06-11T22-58-09_256-jvmRun1 surefire-20260611225814601_1tmp surefire_0-20260611225814601_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="F:\Dev\Prontuario_eletronico\target\test-classes;F:\Dev\Prontuario_eletronico\target\classes;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.3.0\spring-boot-starter-data-jpa-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.3.0\spring-boot-starter-aop-3.3.0.jar;C:\Users\taryj\.m2\repository\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.3.0\spring-boot-starter-jdbc-3.3.0.jar;C:\Users\taryj\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-jdbc\6.1.8\spring-jdbc-6.1.8.jar;C:\Users\taryj\.m2\repository\org\hibernate\orm\hibernate-core\6.5.2.Final\hibernate-core-6.5.2.Final.jar;C:\Users\taryj\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\taryj\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\taryj\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\taryj\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\taryj\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\taryj\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\taryj\.m2\repository\net\bytebuddy\byte-buddy\1.14.16\byte-buddy-1.14.16.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\taryj\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\taryj\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\taryj\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\taryj\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\taryj\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\taryj\.m2\repository\org\springframework\data\spring-data-jpa\3.3.0\spring-data-jpa-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\data\spring-data-commons\3.3.0\spring-data-commons-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-orm\6.1.8\spring-orm-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-context\6.1.8\spring-context-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-tx\6.1.8\spring-tx-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-beans\6.1.8\spring-beans-6.1.8.jar;C:\Users\taryj\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\taryj\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-aspects\6.1.8\spring-aspects-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.0\spring-boot-starter-web-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.0\spring-boot-starter-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.0\spring-boot-starter-logging-3.3.0.jar;C:\Users\taryj\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\taryj\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\taryj\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\taryj\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\taryj\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\taryj\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.0\spring-boot-starter-json-3.3.0.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.0\spring-boot-starter-tomcat-3.3.0.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.24\tomcat-embed-core-10.1.24.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.24\tomcat-embed-websocket-10.1.24.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-web\6.1.8\spring-web-6.1.8.jar;C:\Users\taryj\.m2\repository\io\micrometer\micrometer-observation\1.13.0\micrometer-observation-1.13.0.jar;C:\Users\taryj\.m2\repository\io\micrometer\micrometer-commons\1.13.0\micrometer-commons-1.13.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-webmvc\6.1.8\spring-webmvc-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-expression\6.1.8\spring-expression-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.3.0\spring-boot-starter-validation-3.3.0.jar;C:\Users\taryj\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.24\tomcat-embed-el-10.1.24.jar;C:\Users\taryj\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\taryj\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.3.0\spring-boot-starter-security-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-aop\6.1.8\spring-aop-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-config\6.3.0\spring-security-config-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-web\6.3.0\spring-security-web-6.3.0.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-api\0.12.6\jjwt-api-0.12.6.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-impl\0.12.6\jjwt-impl-0.12.6.jar;C:\Users\taryj\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.12.6\jjwt-jackson-0.12.6.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.6.0\springdoc-openapi-starter-webmvc-ui-2.6.0.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.6.0\springdoc-openapi-starter-webmvc-api-2.6.0.jar;C:\Users\taryj\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.6.0\springdoc-openapi-starter-common-2.6.0.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.22\swagger-core-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.22\swagger-annotations-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.22\swagger-models-jakarta-2.2.22.jar;C:\Users\taryj\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.17.1\jackson-dataformat-yaml-2.17.1.jar;C:\Users\taryj\.m2\repository\org\webjars\swagger-ui\5.17.14\swagger-ui-5.17.14.jar;C:\Users\taryj\.m2\repository\org\mapstruct\mapstruct\1.6.3\mapstruct-1.6.3.jar;C:\Users\taryj\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\taryj\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\taryj\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\taryj\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-devtools\3.3.0\spring-boot-devtools-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot\3.3.0\spring-boot-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.0\spring-boot-autoconfigure-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.3.0\spring-boot-starter-test-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-test\3.3.0\spring-boot-test-3.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.3.0\spring-boot-test-autoconfigure-3.3.0.jar;C:\Users\taryj\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\taryj\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\taryj\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\taryj\.m2\repository\net\minidev\json-smart\2.5.1\json-smart-2.5.1.jar;C:\Users\taryj\.m2\repository\net\minidev\accessors-smart\2.5.1\accessors-smart-2.5.1.jar;C:\Users\taryj\.m2\repository\org\ow2\asm\asm\9.6\asm-9.6.jar;C:\Users\taryj\.m2\repository\org\assertj\assertj-core\3.25.3\assertj-core-3.25.3.jar;C:\Users\taryj\.m2\repository\org\awaitility\awaitility\4.2.1\awaitility-4.2.1.jar;C:\Users\taryj\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\taryj\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\taryj\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\taryj\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\taryj\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\taryj\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\taryj\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.16\byte-buddy-agent-1.14.16.jar;C:\Users\taryj\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\taryj\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;C:\Users\taryj\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\taryj\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-core\6.1.8\spring-core-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-jcl\6.1.8\spring-jcl-6.1.8.jar;C:\Users\taryj\.m2\repository\org\springframework\spring-test\6.1.8\spring-test-6.1.8.jar;C:\Users\taryj\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-test\6.3.0\spring-security-test-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-core\6.3.0\spring-security-core-6.3.0.jar;C:\Users\taryj\.m2\repository\org\springframework\security\spring-security-crypto\6.3.0\spring-security-crypto-6.3.0.jar;C:\Users\taryj\.m2\repository\org\testcontainers\junit-jupiter\1.20.4\junit-jupiter-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\testcontainers\1.20.4\testcontainers-1.20.4.jar;C:\Users\taryj\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\taryj\.m2\repository\org\hamcrest\hamcrest-core\2.2\hamcrest-core-2.2.jar;C:\Users\taryj\.m2\repository\org\apache\commons\commons-compress\1.24.0\commons-compress-1.24.0.jar;C:\Users\taryj\.m2\repository\org\rnorth\duct-tape\duct-tape\1.0.8\duct-tape-1.0.8.jar;C:\Users\taryj\.m2\repository\org\jetbrains\annotations\17.0.0\annotations-17.0.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-api\3.4.0\docker-java-api-3.4.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-transport-zerodep\3.4.0\docker-java-transport-zerodep-3.4.0.jar;C:\Users\taryj\.m2\repository\com\github\docker-java\docker-java-transport\3.4.0\docker-java-transport-3.4.0.jar;C:\Users\taryj\.m2\repository\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar;C:\Users\taryj\.m2\repository\org\testcontainers\postgresql\1.20.4\postgresql-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\jdbc\1.20.4\jdbc-1.20.4.jar;C:\Users\taryj\.m2\repository\org\testcontainers\database-commons\1.20.4\database-commons-1.20.4.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\taryj"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-07-15"/>
+    <property name="java.home" value="F:\Program Files\Java\jdk-21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="F:\Dev\Prontuario_eletronico"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\taryj\AppData\Local\Temp\surefire2136233807506874120\surefirebooter-20260611225814601_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.8+12-LTS-250"/>
+    <property name="user.name" value="taryj"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\taryj\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\taryj\AppData\Local\Temp\"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="21.0.8"/>
+    <property name="user.dir" value="F:\Dev\Prontuario_eletronico"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="11308"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="F:\Program Files\Java\jdk-21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\taryj\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\taryj\bin;C:\Python313\Scripts;C:\Python313;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\dotnet;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;F:\Users\taryj\Git\cmd;C:\Program Files\Git\cmd;F:\Program Files\nodejs;C:\Users\taryj\.local\bin;C:\Users\taryj\AppData\Local\Programs\Python\Python313\Scripts;C:\Users\taryj\AppData\Local\Programs\Python\Python313;C:\Users\taryj\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\taryj\AppData\Local\Programs\Python\Python311;C:\Users\taryj\AppData\Local\Microsoft\WindowsApps;F:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.2.1\bin;F:\Users\taryj\Microsoft VS Code\bin;C:\Windows\System32;F:\Programas\Microsoft VS Code\bin;F:\Microsoft VS Code\bin;F:\Programs\Microsoft VS Code\bin;C:\Users\taryj\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\taryj\AppData\Roaming\npm;C:\Users\taryj\AppData\Local\Programs\Antigravity IDE\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.8+12-LTS-250"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="LOGGED_APPLICATION_NAME" value="[hospitalar] "/>
+  </properties>
+  <testcase name="login_comSenhaInvalida_retorna401" classname="com.soulmv.hospitalar.integration.AuthFlowIntegrationTest" time="3.659">
+    <system-out><![CDATA[22:58:21.205 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.soulmv.hospitalar.integration.AuthFlowIntegrationTest]: AuthFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:58:22.135 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.soulmv.hospitalar.HospitalarApplication for test class com.soulmv.hospitalar.integration.AuthFlowIntegrationTest
+22:58:23.276 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2026-06-11T22:58:24.598-03:00  INFO 11308 --- [hospitalar] [           main] c.s.h.i.AuthFlowIntegrationTest          : Starting AuthFlowIntegrationTest using Java 21.0.8 with PID 11308 (started by taryj in F:\Dev\Prontuario_eletronico)
+2026-06-11T22:58:24.601-03:00  INFO 11308 --- [hospitalar] [           main] c.s.h.i.AuthFlowIntegrationTest          : The following 1 profile is active: "dev"
+2026-06-11T22:58:29.393-03:00  INFO 11308 --- [hospitalar] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-11T22:58:29.922-03:00  INFO 11308 --- [hospitalar] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 502 ms. Found 23 JPA repository interfaces.
+2026-06-11T22:58:35.045-03:00  INFO 11308 --- [hospitalar] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-11T22:58:35.848-03:00  INFO 11308 --- [hospitalar] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2026-06-11T22:58:36.148-03:00  INFO 11308 --- [hospitalar] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-11T22:58:38.719-03:00  INFO 11308 --- [hospitalar] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-11T22:58:38.942-03:00  INFO 11308 --- [hospitalar] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-11T22:58:40.722-03:00  INFO 11308 --- [hospitalar] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:hospitalardb user=SA
+2026-06-11T22:58:40.733-03:00  INFO 11308 --- [hospitalar] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-11T22:58:40.913-03:00  WARN 11308 --- [hospitalar] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-11T22:58:50.425-03:00  INFO 11308 --- [hospitalar] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    create table administracoes_medicamento (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_hora_administracao timestamp(6) not null,
+        observacao varchar(255),
+        status enum ('ADMINISTRADO','NAO_ADMINISTRADO','RECUSADO') not null,
+        enfermeiro_id bigint not null,
+        item_prescricao_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table anamneses (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        alergias varchar(255),
+        antecedentes clob,
+        data_hora timestamp(6) not null,
+        exame_fisico clob,
+        historia_doenca_atual clob,
+        atendimento_id bigint not null,
+        medico_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table anexos (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        content_type varchar(255),
+        nome_armazenado varchar(255) not null,
+        nome_original varchar(255) not null,
+        tamanho bigint not null,
+        enviado_por_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table atendimentos (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_alta timestamp(6),
+        data_entrada timestamp(6) not null,
+        queixa_principal varchar(1000),
+        status enum ('AGUARDANDO_ATENDIMENTO','AGUARDANDO_EXAME','AGUARDANDO_TRIAGEM','ALTA','CANCELADO','EM_ATENDIMENTO','EM_TRIAGEM','INTERNADO') not null,
+        tipo enum ('AMBULATORIAL','EMERGENCIA','INTERNACAO') not null,
+        leito_id bigint,
+        paciente_id bigint not null,
+        profissional_responsavel_id bigint,
+        setor_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table cid10 (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        codigo varchar(255) not null,
+        descricao varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table contas_hospitalares (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_fechamento timestamp(6),
+        status enum ('ABERTA','CANCELADA','FATURADA','FECHADA','GLOSADA') not null,
+        valor_total numeric(14,2) not null,
+        atendimento_id bigint not null,
+        convenio_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table convenios (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        nome varchar(255) not null,
+        registro_ans varchar(255),
+        tipo enum ('PARTICULAR','PLANO_SAUDE','SUS') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table diagnosticos (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_hora timestamp(6) not null,
+        observacao varchar(255),
+        tipo enum ('PRINCIPAL','SECUNDARIO') not null,
+        atendimento_id bigint not null,
+        cid10_id bigint not null,
+        medico_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table evolucoes_clinicas (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_hora timestamp(6) not null,
+        texto clob not null,
+        tipo enum ('ENFERMAGEM','MEDICA') not null,
+        atendimento_id bigint not null,
+        autor_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table guias_tiss (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_geracao timestamp(6) not null,
+        numero_guia varchar(255) not null,
+        status enum ('ENVIADA','GERADA','GLOSADA','PAGA') not null,
+        xml clob not null,
+        conta_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table itens_conta (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        quantidade integer not null,
+        valor_total numeric(14,2) not null,
+        valor_unitario numeric(12,2) not null,
+        conta_id bigint not null,
+        procedimento_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table itens_prescricao (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        dose varchar(255) not null,
+        duracao varchar(255),
+        frequencia varchar(255),
+        observacao varchar(255),
+        via enum ('INALATORIA','INTRAMUSCULAR','INTRAVENOSA','ORAL','OUTRA','RETAL','SUBCUTANEA','TOPICA'),
+        medicamento_id bigint not null,
+        prescricao_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table leitos (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        identificador varchar(255) not null,
+        status enum ('HIGIENIZACAO','INTERDITADO','LIVRE','MANUTENCAO','OCUPADO') not null,
+        setor_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table logs_auditoria (
+        id bigint generated by default as identity,
+        caminho varchar(500) not null,
+        data_hora timestamp(6) not null,
+        ip varchar(255),
+        metodo varchar(255) not null,
+        status integer not null,
+        usuario_login varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table medicamentos (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        concentracao varchar(255),
+        controlado boolean not null,
+        nome varchar(255) not null,
+        principio_ativo varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table pacientes (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        cartao_sus varchar(255),
+        cpf varchar(11) not null,
+        data_nascimento date not null,
+        email varchar(255),
+        bairro varchar(255),
+        cep varchar(255),
+        cidade varchar(255),
+        complemento varchar(255),
+        logradouro varchar(255),
+        numero varchar(255),
+        uf varchar(255),
+        nome varchar(255) not null,
+        numero_carteirinha varchar(255),
+        sexo enum ('FEMININO','MASCULINO','NAO_INFORMADO','OUTRO'),
+        telefone varchar(255),
+        convenio_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table prescricoes (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_hora timestamp(6) not null,
+        observacao varchar(255),
+        status enum ('ATIVA','ENCERRADA','SUSPENSA') not null,
+        atendimento_id bigint not null,
+        medico_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table procedimentos_tuss (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        codigo_tuss varchar(255) not null,
+        descricao varchar(255) not null,
+        valor_referencia numeric(12,2),
+        primary key (id)
+    )
+Hibernate: 
+    create table resultados_exame (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_liberacao timestamp(6),
+        resultado_texto clob,
+        laudo_anexo_id bigint,
+        liberado_por_id bigint not null,
+        solicitacao_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table setores (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        descricao varchar(255),
+        nome varchar(255) not null,
+        tipo enum ('ADMINISTRATIVO','AMBULATORIO','APOIO_DIAGNOSTICO','CENTRO_CIRURGICO','EMERGENCIA','INTERNACAO','UTI') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table sinais_vitais (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_hora timestamp(6) not null,
+        escala_dor integer,
+        frequencia_cardiaca integer,
+        frequencia_respiratoria integer,
+        glicemia integer,
+        pressao_diastolica integer,
+        pressao_sistolica integer,
+        saturacaoo2 integer,
+        temperatura numeric(4,1),
+        atendimento_id bigint not null,
+        registrado_por_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table solicitacoes_exame (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        data_solicitacao timestamp(6) not null,
+        observacao varchar(255),
+        status enum ('CANCELADO','COLETADO','EM_ANALISE','LIBERADO','SOLICITADO') not null,
+        tipo_exame varchar(255) not null,
+        atendimento_id bigint not null,
+        medico_solicitante_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table triagens (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        classificacao_risco enum ('AMARELO','AZUL','LARANJA','VERDE','VERMELHO') not null,
+        data_hora timestamp(6) not null,
+        observacao varchar(1000),
+        atendimento_id bigint not null,
+        enfermeiro_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table usuario_roles (
+        usuario_id bigint not null,
+        role enum ('ADMIN','ENFERMEIRO','FATURAMENTO','MEDICO','PACIENTE','RECEPCAO') not null,
+        primary key (usuario_id, role)
+    )
+Hibernate: 
+    create table usuarios (
+        id bigint generated by default as identity,
+        atualizado_em timestamp(6),
+        criado_em timestamp(6),
+        ativo boolean not null,
+        email varchar(255) not null,
+        login varchar(255) not null,
+        nome_completo varchar(255) not null,
+        paciente_id bigint,
+        profissional_id bigint,
+        senha_hash varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    alter table if exists anamneses 
+       drop constraint if exists UKgvxdiieclewoxp4vdnyx67ny7
+Hibernate: 
+    alter table if exists anamneses 
+       add constraint UKgvxdiieclewoxp4vdnyx67ny7 unique (atendimento_id)
+Hibernate: 
+    alter table if exists cid10 
+       drop constraint if exists UKbpj6lo1fpj4va6b69x3i7usoy
+Hibernate: 
+    alter table if exists cid10 
+       add constraint UKbpj6lo1fpj4va6b69x3i7usoy unique (codigo)
+Hibernate: 
+    alter table if exists contas_hospitalares 
+       drop constraint if exists UK71ad988jo1rw99yp7agv65aw5
+Hibernate: 
+    alter table if exists contas_hospitalares 
+       add constraint UK71ad988jo1rw99yp7agv65aw5 unique (atendimento_id)
+Hibernate: 
+    alter table if exists convenios 
+       drop constraint if exists UKskkcono4q0awcktpi5gkpxfll
+Hibernate: 
+    alter table if exists convenios 
+       add constraint UKskkcono4q0awcktpi5gkpxfll unique (nome)
+Hibernate: 
+    alter table if exists guias_tiss 
+       drop constraint if exists UK3800gu39mvy3uyhvtgmnhtufu
+Hibernate: 
+    alter table if exists guias_tiss 
+       add constraint UK3800gu39mvy3uyhvtgmnhtufu unique (numero_guia)
+Hibernate: 
+    alter table if exists leitos 
+       drop constraint if exists uk_leito_setor_identificador
+Hibernate: 
+    alter table if exists leitos 
+       add constraint uk_leito_setor_identificador unique (setor_id, identificador)
+Hibernate: 
+    alter table if exists pacientes 
+       drop constraint if exists UK1mj2svx930q0tkx1d18qa9rtf
+Hibernate: 
+    alter table if exists pacientes 
+       add constraint UK1mj2svx930q0tkx1d18qa9rtf unique (cpf)
+Hibernate: 
+    alter table if exists procedimentos_tuss 
+       drop constraint if exists UKsugp5ytue1cufk791dcwo2hrn
+Hibernate: 
+    alter table if exists procedimentos_tuss 
+       add constraint UKsugp5ytue1cufk791dcwo2hrn unique (codigo_tuss)
+Hibernate: 
+    alter table if exists resultados_exame 
+       drop constraint if exists UKiqja5fmbfnjvfyphieyrpi5ab
+Hibernate: 
+    alter table if exists resultados_exame 
+       add constraint UKiqja5fmbfnjvfyphieyrpi5ab unique (solicitacao_id)
+Hibernate: 
+    alter table if exists setores 
+       drop constraint if exists UK5o7y799ifk4cvkcguy948x9p7
+Hibernate: 
+    alter table if exists setores 
+       add constraint UK5o7y799ifk4cvkcguy948x9p7 unique (nome)
+Hibernate: 
+    alter table if exists triagens 
+       drop constraint if exists UKy2ur8tvhvgt1jhmvsyymymlq
+Hibernate: 
+    alter table if exists triagens 
+       add constraint UKy2ur8tvhvgt1jhmvsyymymlq unique (atendimento_id)
+Hibernate: 
+    alter table if exists usuarios 
+       drop constraint if exists UKkfsp0s1tflm1cwlj8idhqsad0
+Hibernate: 
+    alter table if exists usuarios 
+       add constraint UKkfsp0s1tflm1cwlj8idhqsad0 unique (email)
+Hibernate: 
+    alter table if exists usuarios 
+       drop constraint if exists UKr8oo98o39ykr4hi57md9nibmw
+Hibernate: 
+    alter table if exists usuarios 
+       add constraint UKr8oo98o39ykr4hi57md9nibmw unique (login)
+Hibernate: 
+    alter table if exists administracoes_medicamento 
+       add constraint FKgjwnqok4wmhxvxsfty0nxegmo 
+       foreign key (enfermeiro_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists administracoes_medicamento 
+       add constraint FKeqpo4p8bac6awufwmwafhhn0r 
+       foreign key (item_prescricao_id) 
+       references itens_prescricao
+Hibernate: 
+    alter table if exists anamneses 
+       add constraint FK1wrlaaw3u1a1ijhnc8c11i5p9 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists anamneses 
+       add constraint FKcnuwjrp5lf1ecq7sbmvyevoxy 
+       foreign key (medico_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists anexos 
+       add constraint FKrisj7vajf39vp7d3so285tvu 
+       foreign key (enviado_por_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists atendimentos 
+       add constraint FK411chjj67p6q4asijwbarw5ey 
+       foreign key (leito_id) 
+       references leitos
+Hibernate: 
+    alter table if exists atendimentos 
+       add constraint FK3pffnfx4jqrrp9ff1hfg7ckg3 
+       foreign key (paciente_id) 
+       references pacientes
+Hibernate: 
+    alter table if exists atendimentos 
+       add constraint FKc1962qp8igprsofjoi9tm9stb 
+       foreign key (profissional_responsavel_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists atendimentos 
+       add constraint FKji169m210plhtbxcjqr0xjn00 
+       foreign key (setor_id) 
+       references setores
+Hibernate: 
+    alter table if exists contas_hospitalares 
+       add constraint FKdo76oa410ne3l04lmn8g7fnoa 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists contas_hospitalares 
+       add constraint FKkthuw0b6a2ljqbxe2dgn9uxvb 
+       foreign key (convenio_id) 
+       references convenios
+Hibernate: 
+    alter table if exists diagnosticos 
+       add constraint FKg1x9twcrs7hvwue3d1pdk9d9x 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists diagnosticos 
+       add constraint FKoxs5mkxccr124gugq7otylnt7 
+       foreign key (cid10_id) 
+       references cid10
+Hibernate: 
+    alter table if exists diagnosticos 
+       add constraint FKkmwrl33xj66podmjr11pdd297 
+       foreign key (medico_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists evolucoes_clinicas 
+       add constraint FKet5aj9hfgsydh242gu748lvta 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists evolucoes_clinicas 
+       add constraint FKjycycpyc5ge3cxtr2hfinkkns 
+       foreign key (autor_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists guias_tiss 
+       add constraint FK78q4ao15e2tqr52afo6rl7cup 
+       foreign key (conta_id) 
+       references contas_hospitalares
+Hibernate: 
+    alter table if exists itens_conta 
+       add constraint FK9osn6a99lt4w19kwal03fg6ht 
+       foreign key (conta_id) 
+       references contas_hospitalares
+Hibernate: 
+    alter table if exists itens_conta 
+       add constraint FK6to1n9h1vkdy3n6thrihkchi7 
+       foreign key (procedimento_id) 
+       references procedimentos_tuss
+Hibernate: 
+    alter table if exists itens_prescricao 
+       add constraint FKsb8io5sehd3xvhn2owpooud1g 
+       foreign key (medicamento_id) 
+       references medicamentos
+Hibernate: 
+    alter table if exists itens_prescricao 
+       add constraint FK86o2qo3v4i0l6a1v05j61qpgy 
+       foreign key (prescricao_id) 
+       references prescricoes
+Hibernate: 
+    alter table if exists leitos 
+       add constraint FKs8v9bqiie1j5mv8hw4p2veey1 
+       foreign key (setor_id) 
+       references setores
+Hibernate: 
+    alter table if exists pacientes 
+       add constraint FKeurapsbkmbbavej0ijrpajl1p 
+       foreign key (convenio_id) 
+       references convenios
+Hibernate: 
+    alter table if exists prescricoes 
+       add constraint FKl0l323o2jihh29h1v5dclbeb9 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists prescricoes 
+       add constraint FKb3wuy4gl3qgcyxj643181j8ay 
+       foreign key (medico_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists resultados_exame 
+       add constraint FKjlrx2aqfwtw4qnwyuqeqfvu65 
+       foreign key (laudo_anexo_id) 
+       references anexos
+Hibernate: 
+    alter table if exists resultados_exame 
+       add constraint FKmkbw5mkglty9gf0u5d3j72qb7 
+       foreign key (liberado_por_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists resultados_exame 
+       add constraint FK24xl46k6rkc64r1rar7bly9im 
+       foreign key (solicitacao_id) 
+       references solicitacoes_exame
+Hibernate: 
+    alter table if exists sinais_vitais 
+       add constraint FKlmj21wspcko5lvwniopt9fyic 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists sinais_vitais 
+       add constraint FK7jgmnqlk0d4dfryf8ie902ndu 
+       foreign key (registrado_por_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists solicitacoes_exame 
+       add constraint FKcrfng9332tlwwmh572cdlgnk0 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists solicitacoes_exame 
+       add constraint FKhx0rung2nu85mefbr5jkqm0tb 
+       foreign key (medico_solicitante_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists triagens 
+       add constraint FK9vx8upn4uuk2xo9ocqk0e1csc 
+       foreign key (atendimento_id) 
+       references atendimentos
+Hibernate: 
+    alter table if exists triagens 
+       add constraint FKhexin73v4jh3boetj8qy8xq9e 
+       foreign key (enfermeiro_id) 
+       references usuarios
+Hibernate: 
+    alter table if exists usuario_roles 
+       add constraint FKuu9tea04xb29m2km5lwe46ua 
+       foreign key (usuario_id) 
+       references usuarios
+2026-06-11T22:58:52.502-03:00  INFO 11308 --- [hospitalar] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-11T22:58:58.013-03:00  INFO 11308 --- [hospitalar] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-11T22:58:58.017-03:00  WARN 11308 --- [hospitalar] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2026-06-11T22:58:58.507-03:00  INFO 11308 --- [hospitalar] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-11T22:59:04.317-03:00  WARN 11308 --- [hospitalar] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-11T22:59:06.076-03:00  INFO 11308 --- [hospitalar] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2bab73fd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7ce00985, org.springframework.security.web.context.SecurityContextHolderFilter@310ff09e, org.springframework.security.web.header.HeaderWriterFilter@74b57299, org.springframework.web.filter.CorsFilter@257f8040, org.springframework.security.web.authentication.logout.LogoutFilter@3f008bb6, com.soulmv.hospitalar.security.JwtAuthenticationFilter@2d73aa17, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@260d5273, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@b3b67e2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@476a0071, org.springframework.security.web.session.SessionManagementFilter@b939971, org.springframework.security.web.access.ExceptionTranslationFilter@18365e98, org.springframework.security.web.access.intercept.AuthorizationFilter@4b0393ee]
+2026-06-11T22:59:07.647-03:00  INFO 11308 --- [hospitalar] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:hospitalardb'
+2026-06-11T22:59:08.042-03:00  INFO 11308 --- [hospitalar] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-06-11T22:59:08.043-03:00  INFO 11308 --- [hospitalar] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-11T22:59:08.047-03:00  INFO 11308 --- [hospitalar] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-06-11T22:59:08.187-03:00  INFO 11308 --- [hospitalar] [           main] c.s.h.i.AuthFlowIntegrationTest          : Started AuthFlowIntegrationTest in 44.963 seconds (process running for 52.987)
+Hibernate: 
+    select
+        count(*) 
+    from
+        usuarios u1_0
+Hibernate: 
+    insert 
+    into
+        usuarios
+        (ativo, atualizado_em, criado_em, email, login, nome_completo, paciente_id, profissional_id, senha_hash, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        usuario_roles
+        (usuario_id, role) 
+    values
+        (?, ?)
+2026-06-11T22:59:09.218-03:00  WARN 11308 --- [hospitalar] [           main] c.soulmv.hospitalar.config.DataSeeder    : ==================================================================
+2026-06-11T22:59:09.219-03:00  WARN 11308 --- [hospitalar] [           main] c.soulmv.hospitalar.config.DataSeeder    :  ADMIN inicial criado -> login: 'admin' / senha: 'admin123'
+2026-06-11T22:59:09.220-03:00  WARN 11308 --- [hospitalar] [           main] c.soulmv.hospitalar.config.DataSeeder    :  ALTERE esta senha em produção (variáveis ADMIN_LOGIN/ADMIN_SENHA).
+2026-06-11T22:59:09.220-03:00  WARN 11308 --- [hospitalar] [           main] c.soulmv.hospitalar.config.DataSeeder    : ==================================================================
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+Hibernate: 
+    select
+        r1_0.usuario_id,
+        r1_0.role 
+    from
+        usuario_roles r1_0 
+    where
+        r1_0.usuario_id=?
+]]></system-out>
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\taryj\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.16\byte-buddy-agent-1.14.16.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+  </testcase>
+  <testcase name="usuarios_semToken_retorna401" classname="com.soulmv.hospitalar.integration.AuthFlowIntegrationTest" time="0.032"/>
+  <testcase name="usuarios_comTokenAdmin_retorna200" classname="com.soulmv.hospitalar.integration.AuthFlowIntegrationTest" time="1.318">
+    <system-out><![CDATA[Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+Hibernate: 
+    select
+        r1_0.usuario_id,
+        r1_0.role 
+    from
+        usuario_roles r1_0 
+    where
+        r1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+Hibernate: 
+    select
+        r1_0.usuario_id,
+        r1_0.role 
+    from
+        usuario_roles r1_0 
+    where
+        r1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    order by
+        u1_0.nome_completo 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        r1_0.usuario_id,
+        r1_0.role 
+    from
+        usuario_roles r1_0 
+    where
+        r1_0.usuario_id=?
+2026-06-11T22:59:14.242-03:00  WARN 11308 --- [hospitalar] [           main] PageModule$PlainPageSerializationWarning : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+Hibernate: 
+    insert 
+    into
+        logs_auditoria
+        (caminho, data_hora, ip, metodo, status, usuario_login, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
+  <testcase name="login_comCredenciaisValidas_retornaToken" classname="com.soulmv.hospitalar.integration.AuthFlowIntegrationTest" time="0.221">
+    <system-out><![CDATA[Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+Hibernate: 
+    select
+        r1_0.usuario_id,
+        r1_0.role 
+    from
+        usuario_roles r1_0 
+    where
+        r1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.login,
+        u1_0.nome_completo,
+        u1_0.paciente_id,
+        u1_0.profissional_id,
+        u1_0.senha_hash 
+    from
+        usuarios u1_0 
+    where
+        u1_0.login=?
+]]></system-out>
+  </testcase>
+</testsuite>

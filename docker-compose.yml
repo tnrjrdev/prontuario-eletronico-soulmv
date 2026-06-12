@@ -1,0 +1,70 @@
+# ============================================================
+# Stack completa do Prontuário Eletrônico
+#
+#   docker compose up -d --build
+#
+#   Web (frontend):   http://localhost:3000
+#   API (Swagger):    http://localhost:8080/swagger-ui.html
+#   Adminer (DB UI):  http://localhost:8081
+#
+# Login inicial: admin / admin123 (troque via ADMIN_SENHA).
+# ============================================================
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: hospitalar-db
+    environment:
+      POSTGRES_DB: hospitalardb
+      POSTGRES_USER: hospitalar
+      POSTGRES_PASSWORD: hospitalar
+    ports:
+      - "5432:5432"
+    volumes:
+      - hospitalar_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hospitalar -d hospitalardb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+    container_name: hospitalar-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://db:5432/hospitalardb
+      DB_USER: hospitalar
+      DB_PASSWORD: hospitalar
+      JWT_SECRET: troque-este-segredo-em-producao-com-no-minimo-32-bytes!!
+      STORAGE_PATH: /app/storage
+      ADMIN_LOGIN: admin
+      ADMIN_SENHA: admin123
+    ports:
+      - "8080:8080"
+    volumes:
+      - hospitalar_storage:/app/storage
+
+  web:
+    build:
+      context: ./web
+    container_name: hospitalar-web
+    depends_on:
+      - api
+    ports:
+      - "3000:80"
+
+  adminer:
+    image: adminer:4
+    container_name: hospitalar-adminer
+    depends_on:
+      - db
+    ports:
+      - "8081:8080"
+
+volumes:
+  hospitalar_pgdata:
+  hospitalar_storage:
