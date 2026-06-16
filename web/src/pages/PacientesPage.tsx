@@ -5,7 +5,7 @@ import { catalogoService } from '../services/catalogo.service'
 import { extractError } from '../services/api'
 import type { Convenio, Paciente } from '../types'
 import { formatCpf, formatDateOnly } from '../utils/format'
-import { Search, UserPlus, FileText, Activity } from 'lucide-react'
+import { Search, UserPlus, FileText } from 'lucide-react'
 
 const VAZIO: PacientePayload = {
   nome: '',

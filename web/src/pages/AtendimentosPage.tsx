@@ -9,7 +9,7 @@ import type { Atendimento, Paciente, Setor, StatusAtendimento } from '../types'
 import { useAuth } from '../hooks/useAuth'
 import { STATUS_ATENDIMENTO_LABELS } from '../utils/constants'
 import { formatDate } from '../utils/format'
-import { Stethoscope, Plus, ArrowRightCircle, CheckCircle2, Clock, Search } from 'lucide-react'
+import { Stethoscope, Plus, ArrowRightCircle, CheckCircle2, Clock, Search, Activity } from 'lucide-react'
 
 const STATUS_CORES: Record<string, BadgeColor> = {
   AGUARDANDO_TRIAGEM: 'attention',
@@ -227,10 +227,18 @@ export function AtendimentosPage() {
                         Alta
                       </Button>
                     )}
-                    {podeMudarStatus && !['ALTA', 'CANCELADO'].includes(a.status) && (
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-primary" title="Abrir Prontuário Clínico (PEP)" onClick={() => navigate(`/pep/${a.id}`)}>
-                         <ArrowRightCircle className="h-5 w-5" />
+                    
+                    {/* Ações Dinâmicas por Status */}
+                    {a.status === 'AGUARDANDO_TRIAGEM' || a.status === 'EM_TRIAGEM' ? (
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-orange-600" title="Realizar Triagem Clínica" onClick={() => navigate(`/triagem/${a.id}`)}>
+                        <Activity className="h-5 w-5" />
                       </Button>
+                    ) : (
+                      podeMudarStatus && !['ALTA', 'CANCELADO'].includes(a.status) && (
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-primary" title="Abrir Prontuário Clínico (PEP)" onClick={() => navigate(`/pep/${a.id}`)}>
+                          <ArrowRightCircle className="h-5 w-5" />
+                        </Button>
+                      )
                     )}
                   </td>
                 </tr>

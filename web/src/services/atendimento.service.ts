@@ -23,6 +23,11 @@ export const atendimentoService = {
     return data
   },
 
+  async buscar(id: number): Promise<Atendimento> {
+    const { data } = await api.get<Atendimento>(`/atendimentos/${id}`)
+    return data
+  },
+
   async abrir(payload: AtendimentoPayload): Promise<Atendimento> {
     const { data } = await api.post<Atendimento>('/atendimentos', payload)
     return data
@@ -30,6 +35,11 @@ export const atendimentoService = {
 
   async atualizarStatus(id: number, status: string): Promise<Atendimento> {
     const { data } = await api.patch<Atendimento>(`/atendimentos/${id}/status`, { status })
+    return data
+  },
+
+  async alocarLeito(id: number, leitoId: number): Promise<Atendimento> {
+    const { data } = await api.patch<Atendimento>(`/atendimentos/${id}/leito`, { leitoId })
     return data
   },
 
