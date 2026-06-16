@@ -10,6 +10,15 @@ import { UsuariosPage } from './pages/UsuariosPage'
 import { AuditoriaPage } from './pages/AuditoriaPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PepPage } from './pages/PepPage'
+import { TriagemPage } from './pages/TriagemPage'
+import { EnfermagemPage } from './pages/EnfermagemPage'
+import { ExamesPage } from './pages/ExamesPage'
+import { FaturamentoPage } from './pages/FaturamentoPage'
+import { EmBrevePage } from './pages/EmBrevePage'
+import { AgendaPage } from './pages/AgendaPage'
+import { InternacoesPage } from './pages/InternacoesPage'
+import { RelatoriosPage } from './pages/RelatoriosPage'
+import { ConfiguracoesPage } from './pages/ConfiguracoesPage'
 
 export default function App() {
   return (
@@ -26,7 +35,29 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/pacientes" element={<PacientesPage />} />
         <Route path="/atendimentos" element={<AtendimentosPage />} />
+        <Route path="/triagem/:id" element={<TriagemPage />} />
         <Route path="/pep/:id" element={<PepPage />} />
+        <Route path="/enfermagem" element={<EnfermagemPage />} />
+        <Route path="/exames" element={<ExamesPage />} />
+        <Route path="/faturamento" element={<FaturamentoPage />} />
+
+        {/* Módulos com backend */}
+        <Route path="/agenda" element={<AgendaPage />} />
+        <Route path="/internacoes" element={<InternacoesPage />} />
+        <Route path="/relatorios" element={<RelatoriosPage />} />
+
+        <Route
+          path="/configuracoes"
+          element={
+            <RoleRoute roles={['ADMIN']}>
+              <ConfiguracoesPage />
+            </RoleRoute>
+          }
+        />
+
+        {/* Módulos do roadmap (placeholder até a tela) */}
+        <Route path="/prontuarios" element={<EmBrevePage />} />
+        <Route path="/prescricoes" element={<EmBrevePage />} />
         <Route
           path="/usuarios"
           element={

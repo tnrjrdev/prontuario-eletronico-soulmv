@@ -115,9 +115,10 @@ const BADGE_CLASSES: Record<BadgeColor, string> = {
   info: 'bg-blue-100 text-blue-800',
 }
 
-export function Badge({ children, color = 'slate', className }: { children: React.ReactNode; color?: BadgeColor; className?: string }) {
+export function Badge({ children, color = 'slate', variant = 'solid', className }: { children: React.ReactNode; color?: BadgeColor; variant?: 'solid' | 'outline'; className?: string }) {
+  const colorCls = variant === 'outline' ? 'border-current bg-transparent' : BADGE_CLASSES[color]
   return (
-    <span className={cn('inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2', BADGE_CLASSES[color], className)}>
+    <span className={cn('inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2', colorCls, className)}>
       {children}
     </span>
   )
@@ -125,6 +126,68 @@ export function Badge({ children, color = 'slate', className }: { children: Reac
 
 export function Spinner({ className }: { className?: string }) {
   return <div className={cn("h-6 w-6 animate-spin rounded-full border-2 border-muted border-t-primary", className)} />
+}
+
+export function Skeleton({ className }: { className?: string }) {
+  return <div className={cn('animate-pulse rounded-md bg-muted', className)} />
+}
+
+export function EmptyState({
+  icon,
+  title,
+  description,
+  action,
+  className,
+}: {
+  icon?: React.ReactNode
+  title: string
+  description?: React.ReactNode
+  action?: React.ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('flex flex-col items-center justify-center text-center py-12 text-muted-foreground', className)}>
+      {icon && <div className="mb-3 opacity-20 [&>svg]:h-12 [&>svg]:w-12">{icon}</div>}
+      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+      {description && <p className="mt-1 max-w-md text-sm">{description}</p>}
+      {action && <div className="mt-4">{action}</div>}
+    </div>
+  )
+}
+
+export function Avatar({
+  name,
+  size = 'md',
+  className,
+}: {
+  name?: string
+  size?: 'sm' | 'md' | 'lg'
+  className?: string
+}) {
+  const initials = (name ?? '?')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join('')
+    .toUpperCase() || '?'
+  const sizes = {
+    sm: 'h-8 w-8 text-xs',
+    md: 'h-10 w-10 text-sm',
+    lg: 'h-12 w-12 text-base',
+  }
+  return (
+    <span
+      className={cn(
+        'inline-flex shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary',
+        sizes[size],
+        className
+      )}
+      aria-hidden
+    >
+      {initials}
+    </span>
+  )
 }
 
 export function Alert({ children, variant = 'default', className }: { children: React.ReactNode, variant?: 'default' | 'destructive', className?: string }) {
