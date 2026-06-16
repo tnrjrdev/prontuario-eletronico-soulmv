@@ -4,6 +4,7 @@ import com.soulmv.hospitalar.dto.request.AtualizarRolesRequest;
 import com.soulmv.hospitalar.dto.request.AtualizarStatusRequest;
 import com.soulmv.hospitalar.dto.request.UsuarioCreateRequest;
 import com.soulmv.hospitalar.dto.request.UsuarioUpdateRequest;
+import com.soulmv.hospitalar.dto.response.ProfissionalResponse;
 import com.soulmv.hospitalar.dto.response.UsuarioResponse;
 import com.soulmv.hospitalar.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -44,6 +46,13 @@ public class UsuarioController {
     public ResponseEntity<Page<UsuarioResponse>> listar(
             @PageableDefault(size = 20, sort = "nomeCompleto") Pageable pageable) {
         return ResponseEntity.ok(usuarioService.listar(pageable));
+    }
+
+    @GetMapping("/profissionais")
+    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO','ADMIN')")
+    @Operation(summary = "Lista profissionais de saúde ativos (para seletores, ex.: agenda)")
+    public ResponseEntity<List<ProfissionalResponse>> listarProfissionais() {
+        return ResponseEntity.ok(usuarioService.listarProfissionais());
     }
 
     @GetMapping("/{id}")

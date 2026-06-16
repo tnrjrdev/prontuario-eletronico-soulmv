@@ -4,8 +4,10 @@ import com.soulmv.hospitalar.dto.request.AtualizarRolesRequest;
 import com.soulmv.hospitalar.dto.request.AtualizarStatusRequest;
 import com.soulmv.hospitalar.dto.request.UsuarioCreateRequest;
 import com.soulmv.hospitalar.dto.request.UsuarioUpdateRequest;
+import com.soulmv.hospitalar.dto.response.ProfissionalResponse;
 import com.soulmv.hospitalar.dto.response.UsuarioResponse;
 import com.soulmv.hospitalar.entity.Usuario;
+import com.soulmv.hospitalar.enums.Role;
 import com.soulmv.hospitalar.exception.BusinessException;
 import com.soulmv.hospitalar.exception.ResourceNotFoundException;
 import com.soulmv.hospitalar.mapper.UsuarioMapper;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Regras de negócio para gestão de usuários (operações restritas ao ADMIN).
@@ -45,6 +49,15 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioResponse buscarPorId(Long id) {
         return usuarioMapper.toResponse(obter(id));
+    }
+
+    /** Profissionais de saúde ativos (médicos/enfermeiros) para seletores. */
+    @Transactional(readOnly = true)
+    public List<ProfissionalResponse> listarProfissionais() {
+        Set<Role> clinicos = Set.of(Role.MEDICO, Role.ENFERMEIRO);
+        return usuarioRepository.findAtivosComRoles(clinicos).stream()
+                .map(u -> new ProfissionalResponse(u.getId(), u.getNomeCompleto(), u.getRoles()))
+                .toList();
     }
 
     @Transactional

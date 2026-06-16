@@ -1,10 +1,15 @@
 package com.soulmv.hospitalar.repository;
 
 import com.soulmv.hospitalar.entity.Usuario;
+import com.soulmv.hospitalar.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,4 +22,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>, JpaSpec
     boolean existsByLogin(String login);
 
     boolean existsByEmail(String email);
+
+    /** Usuários ativos que possuam pelo menos um dos perfis informados. */
+    @Query("select distinct u from Usuario u join u.roles r "
+            + "where u.ativo = true and r in :roles order by u.nomeCompleto")
+    List<Usuario> findAtivosComRoles(@Param("roles") Collection<Role> roles);
 }
