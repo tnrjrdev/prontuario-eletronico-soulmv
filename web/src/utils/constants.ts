@@ -1,7 +1,7 @@
 import type {
   Role, Sexo, StatusExame, ViaAdministracao,
   StatusLeito, TipoAgendamento, StatusAgendamento,
-  TipoSetor, TipoConvenio,
+  TipoSetor, TipoConvenio, StatusConta, StatusAdministracao,
 } from '../types'
 
 export const ROLE_LABELS: Record<Role, string> = {
@@ -88,4 +88,18 @@ export const TIPO_CONVENIO_LABELS: Record<TipoConvenio, string> = {
   PARTICULAR: 'Particular',
   PLANO_SAUDE: 'Plano de saúde',
   SUS: 'SUS',
+}
+
+export const STATUS_CONTA_LABELS: Record<StatusConta, string> = {
+  ABERTA: 'Aberta',
+  FECHADA: 'Fechada',
+  FATURADA: 'Faturada',
+  GLOSADA: 'Glosada',
+  CANCELADA: 'Cancelada',
+}
+
+export const STATUS_ADMINISTRACAO_LABELS: Record<StatusAdministracao, string> = {
+  ADMINISTRADO: 'Administrado',
+  RECUSADO: 'Recusado',
+  NAO_ADMINISTRADO: 'Não administrado',
 }

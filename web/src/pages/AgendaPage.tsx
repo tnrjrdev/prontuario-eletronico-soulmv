@@ -9,6 +9,7 @@ import { DataTable, type Column } from '../components/DataTable'
 import { Modal } from '../components/Modal'
 import { Button, Badge, Input, Select, type BadgeColor } from '../components/ui'
 import { Popover, MenuItem, MenuSeparator } from '../components/Popover'
+import { AsyncCombobox } from '../components/AsyncCombobox'
 import { useToast } from '../components/Toast'
 import { useConfirm } from '../components/ConfirmDialog'
 import {
@@ -238,7 +239,6 @@ function AgendamentoModal({
   saving: boolean
 }) {
   const profissionaisQ = useProfissionais()
-  const pacientesQ = useQuery({ queryKey: ['pacientes', 'select'], queryFn: () => pacienteService.listar({ size: 200 }) })
   const setoresQ = useQuery({ queryKey: ['setores'], queryFn: () => catalogoService.setores() })
   const conveniosQ = useQuery({ queryKey: ['convenios'], queryFn: () => catalogoService.convenios() })
 
@@ -285,10 +285,17 @@ function AgendamentoModal({
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
-          <Select label="Paciente" value={form.pacienteId} onChange={(e) => set('pacienteId', e.target.value)} required>
-            <option value="">Selecione o paciente…</option>
-            {pacientesQ.data?.content.map((p) => <option key={p.id} value={p.id}>{p.nome}</option>)}
-          </Select>
+          <AsyncCombobox
+            label="Paciente"
+            placeholder="Buscar paciente por nome…"
+            required
+            selectedLabel={agendamento?.pacienteNome}
+            fetcher={(q) => pacienteService.listar({ nome: q, size: 20 }).then((p) => p.content)}
+            getValue={(p) => p.id}
+            getLabel={(p) => p.nome}
+            getHint={(p) => (p.cpf ? `CPF ${p.cpf}` : undefined)}
+            onSelect={(p) => set('pacienteId', p ? String(p.id) : '')}
+          />
         </div>
         <Select label="Profissional" value={form.profissionalId} onChange={(e) => set('profissionalId', e.target.value)} required>
           <option value="">Selecione…</option>

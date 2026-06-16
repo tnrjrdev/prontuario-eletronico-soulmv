@@ -13,4 +13,16 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'query-vendor': ['@tanstack/react-query', 'axios'],
+          charts: ['recharts'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
+  },
 })

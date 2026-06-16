@@ -98,6 +98,8 @@ export interface Paciente {
   numeroCarteirinha?: string
 }
 
+export type ClassificacaoRisco = 'VERMELHO' | 'LARANJA' | 'AMARELO' | 'VERDE' | 'AZUL'
+
 export type TipoAtendimento = 'AMBULATORIAL' | 'EMERGENCIA' | 'INTERNACAO'
 
 export type StatusAtendimento =
@@ -203,6 +205,62 @@ export interface FaturamentoDashboard {
   valorPorStatus: Record<string, number>
 }
 
+// ---------------------------------------------------------------------------
+// Faturamento (contas hospitalares + guias TISS)
+// ---------------------------------------------------------------------------
+
+export type StatusConta = 'ABERTA' | 'FECHADA' | 'FATURADA' | 'GLOSADA' | 'CANCELADA'
+export type StatusGuiaTiss = 'GERADA' | 'ENVIADA' | 'PAGA' | 'GLOSADA'
+
+export interface ItemConta {
+  id: number
+  procedimentoId: number
+  codigoTuss: string
+  descricao: string
+  quantidade: number
+  valorUnitario: number
+  valorTotal: number
+}
+
+export interface ContaHospitalar {
+  id: number
+  atendimentoId: number
+  pacienteId: number
+  pacienteNome: string
+  convenioId?: number
+  convenioNome?: string
+  status: StatusConta
+  valorTotal: number
+  dataFechamento?: string
+  itens: ItemConta[]
+  criadoEm?: string
+}
+
+export interface GuiaTiss {
+  id: number
+  contaId: number
+  numeroGuia: string
+  status: StatusGuiaTiss
+  dataGeracao: string
+}
+
+// ---------------------------------------------------------------------------
+// Enfermagem (administração / checagem de medicação)
+// ---------------------------------------------------------------------------
+
+export type StatusAdministracao = 'ADMINISTRADO' | 'RECUSADO' | 'NAO_ADMINISTRADO'
+
+export interface Administracao {
+  id: number
+  itemPrescricaoId: number
+  medicamentoNome: string
+  enfermeiroId: number
+  enfermeiroNome: string
+  status: StatusAdministracao
+  dataHoraAdministracao: string
+  observacao?: string
+}
+
 export interface LogAuditoria {
   id: number
   usuarioLogin: string
@@ -299,6 +357,8 @@ export interface ItemPrescricao {
 export interface Prescricao {
   id: number
   atendimentoId: number
+  pacienteId?: number
+  pacienteNome?: string
   medicoId: number
   medicoNome: string
   status: StatusPrescricao
@@ -327,6 +387,8 @@ export interface ResultadoExame {
 export interface SolicitacaoExame {
   id: number
   atendimentoId: number
+  pacienteId?: number
+  pacienteNome?: string
   tipoExame: string
   status: StatusExame
   observacao?: string

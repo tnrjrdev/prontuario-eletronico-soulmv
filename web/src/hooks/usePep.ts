@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { atendimentoService } from '../services/atendimento.service'
-import { clinicoService } from '../services/clinico.service'
+import { clinicoService, type PrescricaoPayload } from '../services/clinico.service'
 import { pacienteService } from '../services/paciente.service'
 
 /**
@@ -87,6 +87,16 @@ export function useRegistrarEvolucao(atendimentoId: number) {
     mutationFn: (texto: string) => clinicoService.registrarEvolucao(atendimentoId, texto),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: pepKeys.evolucoes(atendimentoId) })
+    },
+  })
+}
+
+export function useCriarPrescricao(atendimentoId: number) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: PrescricaoPayload) => clinicoService.criarPrescricao(atendimentoId, payload),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: pepKeys.prescricoes(atendimentoId) })
     },
   })
 }

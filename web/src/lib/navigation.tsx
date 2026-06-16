@@ -38,8 +38,8 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { to: '/pacientes', label: 'Pacientes', icon: Users, roles: ['RECEPCAO', 'MEDICO', 'ENFERMEIRO'] },
       { to: '/atendimentos', label: 'Atendimentos', icon: Stethoscope, roles: ['RECEPCAO', 'MEDICO', 'ENFERMEIRO'] },
-      { to: '/prontuarios', label: 'Prontuários', icon: FileText, roles: ['MEDICO', 'ENFERMEIRO'], soon: true },
-      { to: '/prescricoes', label: 'Prescrições', icon: Pill, roles: ['MEDICO', 'ENFERMEIRO'], soon: true },
+      { to: '/prontuarios', label: 'Prontuários', icon: FileText, roles: ['MEDICO', 'ENFERMEIRO'] },
+      { to: '/prescricoes', label: 'Prescrições', icon: Pill, roles: ['MEDICO', 'ENFERMEIRO'] },
       { to: '/exames', label: 'Exames', icon: FlaskConical, roles: ['ADMIN', 'MEDICO', 'ENFERMEIRO'] },
       { to: '/internacoes', label: 'Internações', icon: BedDouble, roles: ['ADMIN', 'MEDICO', 'ENFERMEIRO'] },
       { to: '/enfermagem', label: 'Enfermagem', icon: Syringe, roles: ['ADMIN', 'ENFERMEIRO'] },

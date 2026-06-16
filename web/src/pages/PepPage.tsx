@@ -7,6 +7,7 @@ import {
   useSinaisVitais, useEvolucoes, usePrescricoes, useExames, useRegistrarEvolucao,
 } from '../hooks/usePep'
 import { useAuth } from '../hooks/useAuth'
+import { NovaPrescricaoModal } from '../components/NovaPrescricaoModal'
 import { calcularIdade, formatDate, formatTime } from '../utils/format'
 import { SEXO_LABELS, VIA_ADMINISTRACAO_LABELS, STATUS_EXAME_LABELS } from '../utils/constants'
 import type { BadgeColor } from '../components/ui'
@@ -38,9 +39,11 @@ export function PepPage() {
   const atendimentoId = Number(id)
   const { hasRole } = useAuth()
   const podeEvoluir = hasRole('MEDICO', 'ENFERMEIRO')
+  const podePrescrever = hasRole('MEDICO')
 
   const [activeTab, setActiveTab] = useState<Tab>('resumo')
   const [novaEvolucao, setNovaEvolucao] = useState('')
+  const [novaPrescAberta, setNovaPrescAberta] = useState(false)
 
   const atendimentoQ = useAtendimento(atendimentoId)
   const atendimento = atendimentoQ.data
@@ -323,10 +326,20 @@ export function PepPage() {
             {/* PRESCRIÇÕES */}
             {activeTab === 'prescricao' && (
               <div className="max-w-5xl mx-auto space-y-6">
+                {podePrescrever && (
+                  <div className="flex justify-end">
+                    <Button onClick={() => setNovaPrescAberta(true)}><Plus className="mr-2 h-4 w-4" /> Nova prescrição</Button>
+                  </div>
+                )}
                 {prescricoesQ.isLoading ? (
                   <Skeleton className="h-48 w-full" />
                 ) : prescricoes.length === 0 ? (
-                  <EmptyState icon={<Pill />} title="Sem prescrições" description="Nenhuma prescrição registrada para este atendimento." />
+                  <EmptyState
+                    icon={<Pill />}
+                    title="Sem prescrições"
+                    description="Nenhuma prescrição registrada para este atendimento."
+                    action={podePrescrever ? <Button onClick={() => setNovaPrescAberta(true)}><Plus className="mr-2 h-4 w-4" /> Nova prescrição</Button> : undefined}
+                  />
                 ) : (
                   prescricoes.map((presc) => (
                     <Card key={presc.id} className="p-0 overflow-hidden shadow-sm">
@@ -364,6 +377,14 @@ export function PepPage() {
                       </table>
                     </Card>
                   ))
+                )}
+                {novaPrescAberta && (
+                  <NovaPrescricaoModal
+                    atendimentoId={atendimentoId}
+                    alergias={alergias}
+                    itensAtivos={itensAtivos}
+                    onClose={() => setNovaPrescAberta(false)}
+                  />
                 )}
               </div>
             )}

@@ -39,16 +39,54 @@ export function Modal({
 
   useEffect(() => {
     if (!open) return
+
+    // Guarda o foco anterior para restaurar ao fechar.
+    const previouslyFocused = document.activeElement as HTMLElement | null
+
+    const getFocusable = () =>
+      Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      ).filter((el) => el.offsetParent !== null)
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key === 'Tab') {
+        // Mantém o foco preso dentro do diálogo (focus-trap).
+        const focusable = getFocusable()
+        if (focusable.length === 0) {
+          e.preventDefault()
+          panelRef.current?.focus()
+          return
+        }
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        const active = document.activeElement
+        if (e.shiftKey && (active === first || active === panelRef.current)) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
+
     document.addEventListener('keydown', onKey)
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    panelRef.current?.focus()
+    // Foca o primeiro elemento interativo (ou o painel).
+    const focusable = getFocusable()
+    ;(focusable[0] ?? panelRef.current)?.focus()
+
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = prevOverflow
+      previouslyFocused?.focus?.()
     }
   }, [open, onClose])
 

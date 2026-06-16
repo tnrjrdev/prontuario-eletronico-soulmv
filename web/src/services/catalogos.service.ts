@@ -30,6 +30,11 @@ export const convenioService = {
 
 export const medicamentoService = {
   listar: () => listar<Medicamento>('/medicamentos'),
+  /** Busca por nome/princípio ativo (typeahead). */
+  buscar: async (q: string): Promise<Medicamento[]> => {
+    const { data } = await api.get<Page<Medicamento>>('/medicamentos', { params: { q, size: 20 } })
+    return data.content.filter((m) => m.ativo)
+  },
   criar: async (p: MedicamentoPayload) => (await api.post<Medicamento>('/medicamentos', p)).data,
   atualizar: async (id: number, p: MedicamentoPayload) => (await api.put<Medicamento>(`/medicamentos/${id}`, p)).data,
   atualizarStatus: async (id: number, ativo: boolean) => (await api.patch<Medicamento>(`/medicamentos/${id}/status`, { ativo })).data,

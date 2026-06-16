@@ -1,7 +1,9 @@
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Suspense, useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
+import { ErrorBoundary } from '../components/ErrorBoundary'
+import { PageLoader } from '../components/PageLoader'
 
 const COLLAPSE_KEY = 'pep.sidebar.collapsed'
 
@@ -16,6 +18,8 @@ export function AppLayout() {
     })
   }
 
+  const location = useLocation()
+
   return (
     <div className="flex h-screen bg-background">
       <Sidebar collapsed={collapsed} onToggle={toggle} />
@@ -23,7 +27,11 @@ export function AppLayout() {
         <Topbar />
         <main className="flex-1 overflow-auto scrollbar-thin p-8">
           <div className="mx-auto max-w-7xl">
-            <Outlet />
+            <ErrorBoundary resetKey={location.pathname}>
+              <Suspense fallback={<PageLoader />}>
+                <Outlet />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </main>
       </div>

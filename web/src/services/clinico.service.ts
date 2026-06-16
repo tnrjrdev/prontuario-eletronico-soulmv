@@ -6,7 +6,22 @@ import type {
   Prescricao,
   SinaisVitais,
   SolicitacaoExame,
+  ViaAdministracao,
 } from '../types'
+
+export interface ItemPrescricaoPayload {
+  medicamentoId: number
+  dose: string
+  via?: ViaAdministracao
+  frequencia?: string
+  duracao?: string
+  observacao?: string
+}
+
+export interface PrescricaoPayload {
+  observacao?: string
+  itens: ItemPrescricaoPayload[]
+}
 
 /**
  * Serviços do prontuário clínico (PEP), todos aninhados sob um atendimento.
@@ -47,6 +62,11 @@ export const clinicoService = {
 
   async prescricoes(atendimentoId: number): Promise<Prescricao[]> {
     const { data } = await api.get<Prescricao[]>(`/atendimentos/${atendimentoId}/prescricoes`)
+    return data
+  },
+
+  async criarPrescricao(atendimentoId: number, payload: PrescricaoPayload): Promise<Prescricao> {
+    const { data } = await api.post<Prescricao>(`/atendimentos/${atendimentoId}/prescricoes`, payload)
     return data
   },
 
