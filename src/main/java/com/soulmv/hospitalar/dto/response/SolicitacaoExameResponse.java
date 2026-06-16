@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 public record SolicitacaoExameResponse(
         Long id,
         Long atendimentoId,
+        Long pacienteId,
+        String pacienteNome,
         String tipoExame,
         StatusExame status,
         String observacao,

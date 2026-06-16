@@ -15,9 +15,13 @@ import com.soulmv.hospitalar.mapper.ClinicoMapper;
 import com.soulmv.hospitalar.repository.AnexoRepository;
 import com.soulmv.hospitalar.repository.AtendimentoRepository;
 import com.soulmv.hospitalar.repository.SolicitacaoExameRepository;
+import com.soulmv.hospitalar.repository.spec.ExameSpecs;
 import com.soulmv.hospitalar.service.storage.ArquivoDownload;
 import com.soulmv.hospitalar.service.storage.StorageService;
 import com.soulmv.hospitalar.service.support.UsuarioLookup;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +76,15 @@ public class ExameService {
     public List<SolicitacaoExameResponse> listar(Long atendimentoId) {
         return repository.findByAtendimentoIdOrderByDataSolicitacaoDesc(atendimentoId)
                 .stream().map(mapper::toResponse).toList();
+    }
+
+    /** Listagem global de exames (filtros opcionais por status e paciente). */
+    @Transactional(readOnly = true)
+    public Page<SolicitacaoExameResponse> listarTodos(StatusExame status, Long pacienteId, Pageable pageable) {
+        Specification<SolicitacaoExame> spec = Specification
+                .where(ExameSpecs.status(status))
+                .and(ExameSpecs.pacienteId(pacienteId));
+        return repository.findAll(spec, pageable).map(mapper::toResponse);
     }
 
     @Transactional

@@ -3,6 +3,7 @@ package com.soulmv.hospitalar.controller;
 import com.soulmv.hospitalar.dto.request.ExameStatusRequest;
 import com.soulmv.hospitalar.dto.request.SolicitacaoExameRequest;
 import com.soulmv.hospitalar.dto.response.SolicitacaoExameResponse;
+import com.soulmv.hospitalar.enums.StatusExame;
 import com.soulmv.hospitalar.service.ExameService;
 import com.soulmv.hospitalar.service.storage.ArquivoDownload;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,6 +62,16 @@ public class ExameController {
     @Operation(summary = "Lista os exames do atendimento")
     public ResponseEntity<List<SolicitacaoExameResponse>> listar(@PathVariable Long atendimentoId) {
         return ResponseEntity.ok(service.listar(atendimentoId));
+    }
+
+    @GetMapping("/exames")
+    @PreAuthorize("hasAnyRole('MEDICO','ENFERMEIRO')")
+    @Operation(summary = "Listagem global de exames (filtros: status, pacienteId)")
+    public ResponseEntity<Page<SolicitacaoExameResponse>> listarTodos(
+            @RequestParam(required = false) StatusExame status,
+            @RequestParam(required = false) Long pacienteId,
+            @PageableDefault(size = 20, sort = "dataSolicitacao", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(service.listarTodos(status, pacienteId, pageable));
     }
 
     @PatchMapping("/exames/{id}/status")

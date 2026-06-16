@@ -3,11 +3,16 @@ package com.soulmv.hospitalar.controller;
 import com.soulmv.hospitalar.dto.request.PrescricaoRequest;
 import com.soulmv.hospitalar.dto.request.PrescricaoStatusRequest;
 import com.soulmv.hospitalar.dto.response.PrescricaoResponse;
+import com.soulmv.hospitalar.enums.StatusPrescricao;
 import com.soulmv.hospitalar.service.PrescricaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -49,6 +55,16 @@ public class PrescricaoController {
     @Operation(summary = "Lista as prescrições do atendimento")
     public ResponseEntity<List<PrescricaoResponse>> listar(@PathVariable Long atendimentoId) {
         return ResponseEntity.ok(service.listar(atendimentoId));
+    }
+
+    @GetMapping("/prescricoes")
+    @PreAuthorize("hasAnyRole('MEDICO','ENFERMEIRO')")
+    @Operation(summary = "Listagem global de prescrições (filtros: status, pacienteId)")
+    public ResponseEntity<Page<PrescricaoResponse>> listarTodas(
+            @RequestParam(required = false) StatusPrescricao status,
+            @RequestParam(required = false) Long pacienteId,
+            @PageableDefault(size = 20, sort = "dataHora", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(service.listarTodas(status, pacienteId, pageable));
     }
 
     @PatchMapping("/prescricoes/{id}/status")

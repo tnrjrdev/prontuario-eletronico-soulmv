@@ -15,7 +15,11 @@ import com.soulmv.hospitalar.mapper.ClinicoMapper;
 import com.soulmv.hospitalar.repository.AtendimentoRepository;
 import com.soulmv.hospitalar.repository.MedicamentoRepository;
 import com.soulmv.hospitalar.repository.PrescricaoRepository;
+import com.soulmv.hospitalar.repository.spec.PrescricaoSpecs;
 import com.soulmv.hospitalar.service.support.UsuarioLookup;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +86,15 @@ public class PrescricaoService {
     public List<PrescricaoResponse> listar(Long atendimentoId) {
         return repository.findByAtendimentoIdOrderByDataHoraDesc(atendimentoId)
                 .stream().map(mapper::toResponse).toList();
+    }
+
+    /** Listagem global de prescrições (filtros opcionais por status e paciente). */
+    @Transactional(readOnly = true)
+    public Page<PrescricaoResponse> listarTodas(StatusPrescricao status, Long pacienteId, Pageable pageable) {
+        Specification<Prescricao> spec = Specification
+                .where(PrescricaoSpecs.status(status))
+                .and(PrescricaoSpecs.pacienteId(pacienteId));
+        return repository.findAll(spec, pageable).map(mapper::toResponse);
     }
 
     @Transactional

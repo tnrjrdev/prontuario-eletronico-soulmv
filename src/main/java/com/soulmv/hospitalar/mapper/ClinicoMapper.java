@@ -37,6 +37,8 @@ public interface ClinicoMapper {
     DiagnosticoResponse toResponse(Diagnostico diagnostico);
 
     @Mapping(target = "atendimentoId", source = "atendimento.id")
+    @Mapping(target = "pacienteId", source = "atendimento.paciente.id")
+    @Mapping(target = "pacienteNome", source = "atendimento.paciente.nome")
     @Mapping(target = "medicoId", source = "medico.id")
     @Mapping(target = "medicoNome", source = "medico.nomeCompleto")
     PrescricaoResponse toResponse(Prescricao prescricao);
@@ -53,6 +55,8 @@ public interface ClinicoMapper {
     AdministracaoResponse toResponse(AdministracaoMedicamento administracao);
 
     @Mapping(target = "atendimentoId", source = "atendimento.id")
+    @Mapping(target = "pacienteId", source = "atendimento.paciente.id")
+    @Mapping(target = "pacienteNome", source = "atendimento.paciente.nome")
     @Mapping(target = "medicoSolicitanteId", source = "medicoSolicitante.id")
     @Mapping(target = "medicoSolicitanteNome", source = "medicoSolicitante.nomeCompleto")
     SolicitacaoExameResponse toResponse(SolicitacaoExame solicitacao);

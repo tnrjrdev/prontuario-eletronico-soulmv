@@ -8,6 +8,8 @@ import java.util.List;
 public record PrescricaoResponse(
         Long id,
         Long atendimentoId,
+        Long pacienteId,
+        String pacienteNome,
         Long medicoId,
         String medicoNome,
         StatusPrescricao status,

@@ -41,7 +41,7 @@ public class AtendimentoController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO')")
+    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO','FATURAMENTO')")
     @Operation(summary = "Lista/fila de atendimentos (filtros: status, tipo, setorId, pacienteId)")
     public ResponseEntity<Page<AtendimentoResponse>> listar(
             @RequestParam(required = false) StatusAtendimento status,
@@ -53,7 +53,7 @@ public class AtendimentoController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO')")
+    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO','FATURAMENTO')")
     @Operation(summary = "Busca um atendimento por id")
     public ResponseEntity<AtendimentoResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
