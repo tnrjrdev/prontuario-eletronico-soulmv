@@ -1,8 +1,8 @@
-package com.soulmv.hospitalar.config;
+package com.soulmv.iam.config;
 
-import com.soulmv.hospitalar.entity.Usuario;
-import com.soulmv.hospitalar.enums.Role;
-import com.soulmv.hospitalar.repository.UsuarioRepository;
+import com.soulmv.iam.entity.Usuario;
+import com.soulmv.iam.enums.Role;
+import com.soulmv.iam.repository.UsuarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

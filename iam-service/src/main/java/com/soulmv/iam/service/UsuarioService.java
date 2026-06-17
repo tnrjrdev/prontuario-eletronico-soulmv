@@ -1,17 +1,17 @@
-package com.soulmv.hospitalar.service;
+package com.soulmv.iam.service;
 
-import com.soulmv.hospitalar.dto.request.AtualizarRolesRequest;
-import com.soulmv.hospitalar.dto.request.AtualizarStatusRequest;
-import com.soulmv.hospitalar.dto.request.UsuarioCreateRequest;
-import com.soulmv.hospitalar.dto.request.UsuarioUpdateRequest;
-import com.soulmv.hospitalar.dto.response.ProfissionalResponse;
-import com.soulmv.hospitalar.dto.response.UsuarioResponse;
-import com.soulmv.hospitalar.entity.Usuario;
-import com.soulmv.hospitalar.enums.Role;
-import com.soulmv.hospitalar.exception.BusinessException;
-import com.soulmv.hospitalar.exception.ResourceNotFoundException;
-import com.soulmv.hospitalar.mapper.UsuarioMapper;
-import com.soulmv.hospitalar.repository.UsuarioRepository;
+import com.soulmv.iam.dto.request.AtualizarRolesRequest;
+import com.soulmv.iam.dto.request.AtualizarStatusRequest;
+import com.soulmv.iam.dto.request.UsuarioCreateRequest;
+import com.soulmv.iam.dto.request.UsuarioUpdateRequest;
+import com.soulmv.iam.dto.response.ProfissionalResponse;
+import com.soulmv.iam.dto.response.UsuarioResponse;
+import com.soulmv.iam.entity.Usuario;
+import com.soulmv.iam.enums.Role;
+import com.soulmv.iam.exception.BusinessException;
+import com.soulmv.iam.exception.ResourceNotFoundException;
+import com.soulmv.iam.mapper.UsuarioMapper;
+import com.soulmv.iam.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Regras de negócio para gestão de usuários (operações restritas ao ADMIN).
+ * Regras de negÃ³cio para gestÃ£o de usuÃ¡rios (operaÃ§Ãµes restritas ao ADMIN).
  */
 @Service
 public class UsuarioService {
@@ -51,7 +51,7 @@ public class UsuarioService {
         return usuarioMapper.toResponse(obter(id));
     }
 
-    /** Profissionais de saúde ativos (médicos/enfermeiros) para seletores. */
+    /** Profissionais de saÃºde ativos (mÃ©dicos/enfermeiros) para seletores. */
     @Transactional(readOnly = true)
     public List<ProfissionalResponse> listarProfissionais() {
         Set<Role> clinicos = Set.of(Role.MEDICO, Role.ENFERMEIRO);
@@ -63,10 +63,10 @@ public class UsuarioService {
     @Transactional
     public UsuarioResponse criar(UsuarioCreateRequest request) {
         if (usuarioRepository.existsByLogin(request.login())) {
-            throw new BusinessException("Já existe um usuário com este login.", HttpStatus.CONFLICT);
+            throw new BusinessException("JÃ¡ existe um usuÃ¡rio com este login.", HttpStatus.CONFLICT);
         }
         if (usuarioRepository.existsByEmail(request.email())) {
-            throw new BusinessException("Já existe um usuário com este e-mail.", HttpStatus.CONFLICT);
+            throw new BusinessException("JÃ¡ existe um usuÃ¡rio com este e-mail.", HttpStatus.CONFLICT);
         }
 
         Usuario usuario = Usuario.builder()
@@ -88,7 +88,7 @@ public class UsuarioService {
         usuarioRepository.findByEmail(request.email())
                 .filter(outro -> !outro.getId().equals(id))
                 .ifPresent(outro -> {
-                    throw new BusinessException("Já existe um usuário com este e-mail.", HttpStatus.CONFLICT);
+                    throw new BusinessException("JÃ¡ existe um usuÃ¡rio com este e-mail.", HttpStatus.CONFLICT);
                 });
 
         usuario.setNomeCompleto(request.nomeCompleto());
@@ -112,6 +112,6 @@ public class UsuarioService {
 
     private Usuario obter(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", id));
+                .orElseThrow(() -> new ResourceNotFoundException("UsuÃ¡rio", id));
     }
 }

@@ -5,7 +5,7 @@
 #   .\mvnw.cmd spring-boot:run
 # Uso: powershell -ExecutionPolicy Bypass -File scripts\testar-perfis.ps1
 # ============================================================
-$Base = "http://localhost:8080/api"
+$Base = "http://localhost:8000/api"
 $script:Pass = 0
 $script:Fail = 0
 

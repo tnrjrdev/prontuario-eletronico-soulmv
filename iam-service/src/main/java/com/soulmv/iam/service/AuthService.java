@@ -1,15 +1,15 @@
-package com.soulmv.hospitalar.service;
+package com.soulmv.iam.service;
 
-import com.soulmv.hospitalar.dto.request.LoginRequest;
-import com.soulmv.hospitalar.dto.request.RefreshRequest;
-import com.soulmv.hospitalar.dto.response.TokenResponse;
-import com.soulmv.hospitalar.dto.response.UsuarioResponse;
-import com.soulmv.hospitalar.entity.Usuario;
-import com.soulmv.hospitalar.exception.BusinessException;
-import com.soulmv.hospitalar.exception.ResourceNotFoundException;
-import com.soulmv.hospitalar.mapper.UsuarioMapper;
-import com.soulmv.hospitalar.repository.UsuarioRepository;
-import com.soulmv.hospitalar.security.JwtService;
+import com.soulmv.iam.dto.request.LoginRequest;
+import com.soulmv.iam.dto.request.RefreshRequest;
+import com.soulmv.iam.dto.response.TokenResponse;
+import com.soulmv.iam.dto.response.UsuarioResponse;
+import com.soulmv.iam.entity.Usuario;
+import com.soulmv.iam.exception.BusinessException;
+import com.soulmv.iam.exception.ResourceNotFoundException;
+import com.soulmv.iam.mapper.UsuarioMapper;
+import com.soulmv.iam.repository.UsuarioRepository;
+import com.soulmv.iam.security.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Orquestra autenticação (login), renovação de token (refresh) e consulta do
- * usuário logado (me).
+ * Orquestra autenticaÃ§Ã£o (login), renovaÃ§Ã£o de token (refresh) e consulta do
+ * usuÃ¡rio logado (me).
  */
 @Service
 public class AuthService {
@@ -45,11 +45,11 @@ public class AuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.login(), request.senha()));
         } catch (BadCredentialsException e) {
-            throw new BusinessException("Login ou senha inválidos.", HttpStatus.UNAUTHORIZED);
+            throw new BusinessException("Login ou senha invÃ¡lidos.", HttpStatus.UNAUTHORIZED);
         }
 
         Usuario usuario = usuarioRepository.findByLogin(request.login())
-                .orElseThrow(() -> new BusinessException("Login ou senha inválidos.", HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new BusinessException("Login ou senha invÃ¡lidos.", HttpStatus.UNAUTHORIZED));
 
         return gerarTokens(usuario);
     }
@@ -58,15 +58,15 @@ public class AuthService {
     public TokenResponse refresh(RefreshRequest request) {
         String token = request.refreshToken();
         if (!jwtService.isValido(token) || !jwtService.isRefreshToken(token)) {
-            throw new BusinessException("Refresh token inválido ou expirado.", HttpStatus.UNAUTHORIZED);
+            throw new BusinessException("Refresh token invÃ¡lido ou expirado.", HttpStatus.UNAUTHORIZED);
         }
 
         String login = jwtService.extrairLogin(token);
         Usuario usuario = usuarioRepository.findByLogin(login)
-                .orElseThrow(() -> new BusinessException("Refresh token inválido.", HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new BusinessException("Refresh token invÃ¡lido.", HttpStatus.UNAUTHORIZED));
 
         if (!usuario.isAtivo()) {
-            throw new BusinessException("Usuário inativo.", HttpStatus.FORBIDDEN);
+            throw new BusinessException("UsuÃ¡rio inativo.", HttpStatus.FORBIDDEN);
         }
 
         return gerarTokens(usuario);
@@ -75,7 +75,7 @@ public class AuthService {
     @Transactional(readOnly = true)
     public UsuarioResponse me(String login) {
         Usuario usuario = usuarioRepository.findByLogin(login)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", login));
+                .orElseThrow(() -> new ResourceNotFoundException("UsuÃ¡rio", login));
         return usuarioMapper.toResponse(usuario);
     }
 

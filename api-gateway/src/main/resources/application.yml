@@ -1,0 +1,20 @@
+server:
+  port: 8000 # Porta que o Gateway vai rodar
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # Rotas para o novo IAM Service (Porta 8081)
+        - id: iam-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**, /api/usuarios/**
+
+        # Rota Padrão: Tudo que não for auth/usuarios vai pro Monólito (Porta 8080)
+        - id: monolito-route
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**

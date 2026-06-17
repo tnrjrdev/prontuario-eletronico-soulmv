@@ -1,10 +1,10 @@
-package com.soulmv.hospitalar.controller;
+package com.soulmv.iam.controller;
 
-import com.soulmv.hospitalar.dto.request.LoginRequest;
-import com.soulmv.hospitalar.dto.request.RefreshRequest;
-import com.soulmv.hospitalar.dto.response.TokenResponse;
-import com.soulmv.hospitalar.dto.response.UsuarioResponse;
-import com.soulmv.hospitalar.service.AuthService;
+import com.soulmv.iam.dto.request.LoginRequest;
+import com.soulmv.iam.dto.request.RefreshRequest;
+import com.soulmv.iam.dto.response.TokenResponse;
+import com.soulmv.iam.dto.response.UsuarioResponse;
+import com.soulmv.iam.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Autenticação", description = "Login, renovação de token e usuário logado")
+@Tag(name = "AutenticaÃ§Ã£o", description = "Login, renovaÃ§Ã£o de token e usuÃ¡rio logado")
 public class AuthController {
 
     private final AuthService authService;
@@ -41,7 +41,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    @Operation(summary = "Retorna os dados do usuário autenticado",
+    @Operation(summary = "Retorna os dados do usuÃ¡rio autenticado",
             security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<UsuarioResponse> me(Authentication authentication) {
         return ResponseEntity.ok(authService.me(authentication.getName()));
