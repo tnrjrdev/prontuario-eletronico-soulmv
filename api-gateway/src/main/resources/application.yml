@@ -8,10 +8,18 @@ spring:
     gateway:
       routes:
         # Rotas para o novo IAM Service (Porta 8081)
-        - id: iam-route
+        - id: iam-service-auth
           uri: http://localhost:8081
           predicates:
-            - Path=/api/auth/**, /api/usuarios/**
+            - Path=/api/auth/**
+        - id: iam-service-usuarios
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios/**
+        - id: paciente-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/pacientes/**
 
         # Rota Padrão: Tudo que não for auth/usuarios vai pro Monólito (Porta 8080)
         - id: monolito-route

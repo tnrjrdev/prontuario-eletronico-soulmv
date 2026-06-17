@@ -1,8 +1,8 @@
-package com.soulmv.hospitalar.controller;
+package com.soulmv.paciente.controller;
 
-import com.soulmv.hospitalar.dto.request.PacienteRequest;
-import com.soulmv.hospitalar.dto.response.PacienteResponse;
-import com.soulmv.hospitalar.service.PacienteService;
+import com.soulmv.paciente.dto.request.PacienteRequest;
+import com.soulmv.paciente.dto.response.PacienteResponse;
+import com.soulmv.paciente.service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

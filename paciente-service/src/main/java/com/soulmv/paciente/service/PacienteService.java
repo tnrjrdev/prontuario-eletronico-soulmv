@@ -1,16 +1,14 @@
-package com.soulmv.hospitalar.service;
+package com.soulmv.paciente.service;
 
-import com.soulmv.hospitalar.dto.request.PacienteRequest;
-import com.soulmv.hospitalar.dto.response.PacienteResponse;
-import com.soulmv.hospitalar.entity.Convenio;
-import com.soulmv.hospitalar.entity.Paciente;
-import com.soulmv.hospitalar.enums.Sexo;
-import com.soulmv.hospitalar.exception.BusinessException;
-import com.soulmv.hospitalar.exception.ResourceNotFoundException;
-import com.soulmv.hospitalar.mapper.PacienteMapper;
-import com.soulmv.hospitalar.repository.ConvenioRepository;
-import com.soulmv.hospitalar.repository.PacienteRepository;
-import com.soulmv.hospitalar.repository.spec.PacienteSpecs;
+import com.soulmv.paciente.dto.request.PacienteRequest;
+import com.soulmv.paciente.dto.response.PacienteResponse;
+import com.soulmv.paciente.entity.Paciente;
+import com.soulmv.paciente.enums.Sexo;
+import com.soulmv.paciente.exception.BusinessException;
+import com.soulmv.paciente.exception.ResourceNotFoundException;
+import com.soulmv.paciente.mapper.PacienteMapper;
+import com.soulmv.paciente.repository.PacienteRepository;
+import com.soulmv.paciente.repository.spec.PacienteSpecs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,14 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
-    private final ConvenioRepository convenioRepository;
     private final PacienteMapper mapper;
 
     public PacienteService(PacienteRepository pacienteRepository,
-                           ConvenioRepository convenioRepository,
                            PacienteMapper mapper) {
         this.pacienteRepository = pacienteRepository;
-        this.convenioRepository = convenioRepository;
         this.mapper = mapper;
     }
 
@@ -65,7 +60,7 @@ public class PacienteService {
                 .telefone(request.telefone())
                 .email(request.email())
                 .endereco(mapper.toEntity(request.endereco()))
-                .convenio(resolverConvenio(request.convenioId()))
+                .convenioId(request.convenioId())
                 .numeroCarteirinha(request.numeroCarteirinha())
                 .build();
 
@@ -88,19 +83,12 @@ public class PacienteService {
         paciente.setTelefone(request.telefone());
         paciente.setEmail(request.email());
         paciente.setEndereco(mapper.toEntity(request.endereco()));
-        paciente.setConvenio(resolverConvenio(request.convenioId()));
+        paciente.setConvenioId(request.convenioId());
         paciente.setNumeroCarteirinha(request.numeroCarteirinha());
 
         return mapper.toResponse(pacienteRepository.save(paciente));
     }
 
-    private Convenio resolverConvenio(Long convenioId) {
-        if (convenioId == null) {
-            return null;
-        }
-        return convenioRepository.findById(convenioId)
-                .orElseThrow(() -> new ResourceNotFoundException("Convênio", convenioId));
-    }
 
     private Paciente obter(Long id) {
         return pacienteRepository.findById(id)
