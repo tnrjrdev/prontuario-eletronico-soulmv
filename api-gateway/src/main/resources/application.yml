@@ -4,25 +4,53 @@ server:
 spring:
   application:
     name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
   cloud:
     gateway:
+      # Descoberta automática de rotas via Eureka também fica habilitada (lb://<service-id>)
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
       routes:
-        # Rotas para o novo IAM Service (Porta 8081)
+        # IAM Service (auth + usuários) — resolvido via Eureka
         - id: iam-service-auth
-          uri: http://localhost:8081
+          uri: lb://iam-service
           predicates:
             - Path=/api/auth/**
         - id: iam-service-usuarios
-          uri: http://localhost:8081
+          uri: lb://iam-service
           predicates:
             - Path=/api/usuarios/**
+
+        # Paciente Service
         - id: paciente-service
-          uri: http://localhost:8082
+          uri: lb://paciente-service
           predicates:
             - Path=/api/pacientes/**
 
-        # Rota Padrão: Tudo que não for auth/usuarios vai pro Monólito (Porta 8080)
+        # Catálogo Service (setores, leitos, convênios, medicamentos, TUSS, CID-10 + agregados)
+        - id: catalogo-service
+          uri: lb://catalogo-service
+          predicates:
+            - Path=/api/setores/**,/api/leitos/**,/api/convenios/**,/api/medicamentos/**,/api/procedimentos-tuss/**,/api/cid10/**,/api/catalogos/**
+
+        # Agendamento Service
+        - id: agendamento-service
+          uri: lb://agendamento-service
+          predicates:
+            - Path=/api/agendamentos/**
+
+        # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080
           predicates:
             - Path=/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
