@@ -1,0 +1,15 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          # Repositório de configuração local (filesystem). Em produção, troque
+          # para um repositório Git (spring.cloud.config.server.git.uri).
+          search-locations: classpath:/configs/

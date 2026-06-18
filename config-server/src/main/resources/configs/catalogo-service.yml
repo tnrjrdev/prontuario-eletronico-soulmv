@@ -1,0 +1,7 @@
+# Overrides específicos do catalogo-service (servidos pelo Config Server).
+resilience4j:
+  circuitbreaker:
+    instances:
+      iam:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
