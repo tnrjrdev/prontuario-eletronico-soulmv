@@ -54,6 +54,12 @@ spring:
           predicates:
             - Path=/api/dashboards/**
 
+        # Auditoria Service (leitura da trilha)
+        - id: auditoria-service
+          uri: lb://auditoria-service
+          predicates:
+            - Path=/api/auditoria/**
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080

@@ -1,7 +1,7 @@
-package com.soulmv.hospitalar.controller;
+package com.soulmv.auditoria.controller;
 
-import com.soulmv.hospitalar.dto.response.AuditoriaResponse;
-import com.soulmv.hospitalar.service.AuditoriaService;
+import com.soulmv.auditoria.dto.response.AuditoriaResponse;
+import com.soulmv.auditoria.service.AuditoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
