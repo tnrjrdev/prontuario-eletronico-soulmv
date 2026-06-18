@@ -1,7 +1,7 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { Role, Usuario } from '../types'
 import { authService } from '../services/auth.service'
-import { getToken, setToken } from '../services/api'
+import { getToken, setToken, setRefreshToken, clearTokens } from '../services/api'
 
 interface AuthContextValue {
   usuario: Usuario | null
@@ -27,18 +27,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authService
       .me()
       .then(setUsuario)
-      .catch(() => setToken(null))
+      .catch(() => clearTokens())
       .finally(() => setCarregando(false))
   }, [])
 
   const login = useCallback(async (loginValue: string, senha: string) => {
     const resposta = await authService.login(loginValue, senha)
     setToken(resposta.accessToken)
+    setRefreshToken(resposta.refreshToken)
     setUsuario(resposta.usuario)
   }, [])
 
   const logout = useCallback(() => {
-    setToken(null)
+    clearTokens()
     setUsuario(null)
   }, [])
 

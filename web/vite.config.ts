@@ -1,9 +1,18 @@
-import { defineConfig } from 'vite'
+/// <reference types="vitest/config" />
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
-// Em desenvolvimento, /api é redirecionado para o API Gateway (porta 8000).
+// Em dev, /api é redirecionado para o API Gateway (8000), que distribui para
+// os microsserviços (auth/usuários → iam-service; pacientes; catálogos; etc.)
+// e cai no monólito (8080) para os domínios ainda não extraídos.
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: false,
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+  },
   server: {
     port: 5173,
     proxy: {

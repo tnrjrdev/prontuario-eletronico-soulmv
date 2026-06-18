@@ -33,6 +33,7 @@ export function EnfermagemPage() {
   const atendQ = useQuery({
     queryKey: ['atendimentos', 'enfermagem'],
     queryFn: () => atendimentoService.listar({ size: 200 }),
+    refetchInterval: 20_000,
   })
   const pacientes = (atendQ.data?.content ?? []).filter((a) => EM_CUIDADO.includes(a.status))
   const filtrados = pacientes.filter((a) => a.pacienteNome.toLowerCase().includes(busca.toLowerCase()))

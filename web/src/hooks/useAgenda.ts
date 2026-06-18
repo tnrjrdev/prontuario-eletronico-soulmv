@@ -15,6 +15,7 @@ export function useAgendamentos(filtro: AgendamentoFiltro) {
   return useQuery({
     queryKey: agendaKeys.lista(filtro),
     queryFn: () => agendamentoService.listar(filtro),
+    refetchInterval: 30_000,
   })
 }
 

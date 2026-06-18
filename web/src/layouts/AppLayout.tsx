@@ -8,7 +8,13 @@ import { PageLoader } from '../components/PageLoader'
 const COLLAPSE_KEY = 'pep.sidebar.collapsed'
 
 export function AppLayout() {
-  const [collapsed, setCollapsed] = useState(() => localStorage.getItem(COLLAPSE_KEY) === '1')
+  const [collapsed, setCollapsed] = useState(() => {
+    const saved = localStorage.getItem(COLLAPSE_KEY)
+    if (saved === '1') return true
+    if (saved === '0') return false
+    // Sem preferência salva: recolhe em telas estreitas (tablet/notebook pequeno).
+    return typeof window !== 'undefined' && window.innerWidth < 1024
+  })
 
   const toggle = () => {
     setCollapsed((c) => {

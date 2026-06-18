@@ -8,6 +8,7 @@ import {
 } from '../hooks/usePep'
 import { useAuth } from '../hooks/useAuth'
 import { NovaPrescricaoModal } from '../components/NovaPrescricaoModal'
+import { cn } from '../utils/cn'
 import { calcularIdade, formatDate, formatTime } from '../utils/format'
 import { SEXO_LABELS, VIA_ADMINISTRACAO_LABELS, STATUS_EXAME_LABELS } from '../utils/constants'
 import type { BadgeColor } from '../components/ui'
@@ -17,7 +18,7 @@ import {
   Info, History, MessageSquare, Plus, CheckCircle2, ShieldCheck,
 } from 'lucide-react'
 
-type Tab = 'resumo' | 'evolucao' | 'prescricao' | 'exames'
+type Tab = 'resumo' | 'timeline' | 'evolucao' | 'prescricao' | 'exames'
 
 const STATUS_PRESCRICAO_COR: Record<StatusPrescricao, BadgeColor> = {
   ATIVA: 'stable',
@@ -197,6 +198,7 @@ export function PepPage() {
           <div role="tablist" aria-label="Seções do prontuário" className="flex border-b border-border bg-card px-2 shrink-0">
             {([
               ['resumo', 'Resumo Clínico', Activity],
+              ['timeline', 'Linha do tempo', History],
               ['evolucao', 'Evoluções', FileText],
               ['prescricao', 'Prescrições', Pill],
               ['exames', 'Exames', FlaskConical],
@@ -272,6 +274,46 @@ export function PepPage() {
                     )}
                   </Card>
                 </div>
+              </div>
+            )}
+
+            {/* LINHA DO TEMPO */}
+            {activeTab === 'timeline' && (
+              <div className="max-w-3xl mx-auto">
+                {(evolucoesQ.isLoading || prescricoesQ.isLoading || examesQ.isLoading || sinaisQ.isLoading || diagnosticosQ.isLoading) ? (
+                  <div className="space-y-3"><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /></div>
+                ) : (() => {
+                  const eventos = [
+                    ...diagnosticos.map((d) => ({ key: `d${d.id}`, dataHora: d.dataHora, Icon: Info, cor: 'text-violet-600 bg-violet-50', titulo: 'Diagnóstico', detalhe: `${d.cid10Codigo} — ${d.cid10Descricao}`, autor: d.medicoNome })),
+                    ...sinais.map((s) => ({ key: `s${s.id}`, dataHora: s.dataHora, Icon: Activity, cor: 'text-emerald-600 bg-emerald-50', titulo: 'Sinais vitais', detalhe: [s.pressaoSistolica && s.pressaoDiastolica ? `PA ${s.pressaoSistolica}x${s.pressaoDiastolica}` : null, s.frequenciaCardiaca ? `FC ${s.frequenciaCardiaca}` : null, s.saturacaoO2 ? `SpO₂ ${s.saturacaoO2}%` : null, s.temperatura ? `T ${s.temperatura}°C` : null].filter(Boolean).join(' • '), autor: s.registradoPorNome })),
+                    ...evolucoes.map((e) => ({ key: `e${e.id}`, dataHora: e.dataHora, Icon: FileText, cor: 'text-blue-600 bg-blue-50', titulo: `Evolução ${e.tipo === 'MEDICA' ? 'médica' : 'de enfermagem'}`, detalhe: e.texto, autor: e.autorNome })),
+                    ...prescricoes.map((p) => ({ key: `p${p.id}`, dataHora: p.dataHora, Icon: Pill, cor: 'text-fuchsia-600 bg-fuchsia-50', titulo: 'Prescrição', detalhe: `${p.itens.length} item(ns) • ${p.status}`, autor: p.medicoNome })),
+                    ...exames.map((x) => ({ key: `x${x.id}`, dataHora: x.dataSolicitacao, Icon: FlaskConical, cor: 'text-amber-600 bg-amber-50', titulo: `Exame: ${x.tipoExame}`, detalhe: STATUS_EXAME_LABELS[x.status], autor: x.medicoSolicitanteNome })),
+                  ].sort((a, b) => b.dataHora.localeCompare(a.dataHora))
+
+                  if (eventos.length === 0) {
+                    return <EmptyState icon={<History />} title="Sem registros" description="Ainda não há eventos clínicos neste atendimento." />
+                  }
+                  return (
+                    <ol className="relative ml-3 space-y-5 border-l border-border">
+                      {eventos.map((ev) => (
+                        <li key={ev.key} className="ml-6">
+                          <span className={cn('absolute -left-[13px] flex h-7 w-7 items-center justify-center rounded-full border border-border', ev.cor)}>
+                            <ev.Icon className="h-3.5 w-3.5" />
+                          </span>
+                          <div className="rounded-lg border border-border bg-card p-3 shadow-sm">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="font-semibold text-foreground">{ev.titulo}</span>
+                              <time className="shrink-0 text-xs text-muted-foreground">{formatDate(ev.dataHora)}</time>
+                            </div>
+                            {ev.detalhe && <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-sm text-muted-foreground">{ev.detalhe}</p>}
+                            {ev.autor && <p className="mt-1 text-xs text-muted-foreground">por {ev.autor}</p>}
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  )
+                })()}
               </div>
             )}
 

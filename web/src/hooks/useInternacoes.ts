@@ -4,11 +4,14 @@ import { leitoService } from '../services/leito.service'
 import { dashboardService } from '../services/dashboard.service'
 import { useAuth } from './useAuth'
 
+const LIVE_REFETCH = 15_000
+
 /** Atendimentos internados (status INTERNADO). */
 export function useInternados() {
   return useQuery({
     queryKey: ['atendimentos', { status: 'INTERNADO' }],
     queryFn: () => atendimentoService.listar({ status: 'INTERNADO', size: 200 }),
+    refetchInterval: LIVE_REFETCH,
   })
 }
 
@@ -17,6 +20,7 @@ export function useInternacoesAbertas() {
   return useQuery({
     queryKey: ['atendimentos', { tipo: 'INTERNACAO' }],
     queryFn: () => atendimentoService.listar({ tipo: 'INTERNACAO', size: 200 }),
+    refetchInterval: LIVE_REFETCH,
   })
 }
 
@@ -24,6 +28,7 @@ export function useLeitos() {
   return useQuery({
     queryKey: ['leitos'],
     queryFn: () => leitoService.listar(),
+    refetchInterval: LIVE_REFETCH,
   })
 }
 
