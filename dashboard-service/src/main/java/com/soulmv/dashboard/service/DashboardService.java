@@ -1,14 +1,14 @@
-package com.soulmv.hospitalar.service;
+package com.soulmv.dashboard.service;
 
-import com.soulmv.hospitalar.dto.response.AtendimentosDashboardResponse;
-import com.soulmv.hospitalar.dto.response.FaturamentoDashboardResponse;
-import com.soulmv.hospitalar.dto.response.OcupacaoLeitosResponse;
-import com.soulmv.hospitalar.enums.StatusAtendimento;
-import com.soulmv.hospitalar.enums.StatusConta;
-import com.soulmv.hospitalar.enums.StatusLeito;
-import com.soulmv.hospitalar.repository.AtendimentoRepository;
-import com.soulmv.hospitalar.repository.ContaHospitalarRepository;
-import com.soulmv.hospitalar.repository.LeitoRepository;
+import com.soulmv.dashboard.dto.response.AtendimentosDashboardResponse;
+import com.soulmv.dashboard.dto.response.FaturamentoDashboardResponse;
+import com.soulmv.dashboard.dto.response.OcupacaoLeitosResponse;
+import com.soulmv.dashboard.enums.StatusAtendimento;
+import com.soulmv.dashboard.enums.StatusConta;
+import com.soulmv.dashboard.enums.StatusLeito;
+import com.soulmv.dashboard.repository.AtendimentoRepository;
+import com.soulmv.dashboard.repository.ContaHospitalarRepository;
+import com.soulmv.dashboard.repository.LeitoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

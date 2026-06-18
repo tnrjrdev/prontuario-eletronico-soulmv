@@ -1,9 +1,9 @@
-package com.soulmv.hospitalar.controller;
+package com.soulmv.dashboard.controller;
 
-import com.soulmv.hospitalar.dto.response.AtendimentosDashboardResponse;
-import com.soulmv.hospitalar.dto.response.FaturamentoDashboardResponse;
-import com.soulmv.hospitalar.dto.response.OcupacaoLeitosResponse;
-import com.soulmv.hospitalar.service.DashboardService;
+import com.soulmv.dashboard.dto.response.AtendimentosDashboardResponse;
+import com.soulmv.dashboard.dto.response.FaturamentoDashboardResponse;
+import com.soulmv.dashboard.dto.response.OcupacaoLeitosResponse;
+import com.soulmv.dashboard.service.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -48,6 +48,12 @@ spring:
           predicates:
             - Path=/api/contas/**,/api/guias-tiss/**
 
+        # Dashboard Service (agregador)
+        - id: dashboard-service
+          uri: lb://dashboard-service
+          predicates:
+            - Path=/api/dashboards/**
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080
