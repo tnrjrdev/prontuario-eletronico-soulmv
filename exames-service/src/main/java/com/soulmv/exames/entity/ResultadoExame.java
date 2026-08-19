@@ -1,0 +1,45 @@
+package com.soulmv.exames.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "resultados_exame")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ResultadoExame extends BaseEntity {
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "solicitacao_id", nullable = false, unique = true)
+    private SolicitacaoExame solicitacao;
+
+    @Lob
+    private String resultadoTexto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "laudo_anexo_id")
+    private Anexo laudo;
+
+    @Column(name = "liberado_por_id", nullable = false)
+    private Long liberadoPorId;
+
+    private String liberadoPorNome;
+
+    private LocalDateTime dataLiberacao;
+}
