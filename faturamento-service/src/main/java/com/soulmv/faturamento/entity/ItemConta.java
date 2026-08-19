@@ -30,9 +30,20 @@ public class ItemConta extends BaseEntity {
     @JoinColumn(name = "conta_id", nullable = false)
     private ContaHospitalar conta;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "procedimento_id", nullable = false)
-    private ProcedimentoTuss procedimento;
+    /**
+     * Procedimento TUSS é dono do catalogo-service (não é mais uma relação JPA local).
+     * codigoTuss/descricao são um retrato do procedimento no momento em que o item foi
+     * faturado — de propósito: se o catálogo renomear ou repreçar o procedimento depois,
+     * a conta já fechada não deve mudar retroativamente.
+     */
+    @Column(nullable = false)
+    private Long procedimentoId;
+
+    @Column(nullable = false)
+    private String codigoTuss;
+
+    @Column(nullable = false)
+    private String descricao;
 
     @Column(nullable = false)
     private int quantidade;

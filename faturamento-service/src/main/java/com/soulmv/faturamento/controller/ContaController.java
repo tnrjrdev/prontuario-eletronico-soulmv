@@ -2,6 +2,7 @@ package com.soulmv.faturamento.controller;
 
 import com.soulmv.faturamento.dto.request.ContaRequest;
 import com.soulmv.faturamento.dto.request.ItemContaRequest;
+import com.soulmv.faturamento.dto.response.ContaEstatisticasResponse;
 import com.soulmv.faturamento.dto.response.ContaResponse;
 import com.soulmv.faturamento.dto.response.GuiaTissResponse;
 import com.soulmv.faturamento.enums.StatusConta;
@@ -60,6 +61,13 @@ public class ContaController {
     @Operation(summary = "Busca uma conta por id")
     public ResponseEntity<ContaResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    @GetMapping("/contas/estatisticas")
+    @PreAuthorize("hasAnyRole('FATURAMENTO','ADMIN')")
+    @Operation(summary = "Totais e somas de contas por status (uso interno: dashboard-service)")
+    public ResponseEntity<ContaEstatisticasResponse> estatisticas() {
+        return ResponseEntity.ok(service.estatisticas());
     }
 
     @PostMapping("/contas/{id}/itens")

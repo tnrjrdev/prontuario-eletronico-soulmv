@@ -55,9 +55,9 @@ public class TissXmlBuilder {
         sb.append("    <ans:procedimentosExecutados>\n");
         for (ItemConta item : conta.getItens()) {
             sb.append("      <ans:procedimentoExecutado>\n");
-            sb.append("        <ans:codigoProcedimento>").append(esc(item.getProcedimento().getCodigoTuss()))
+            sb.append("        <ans:codigoProcedimento>").append(esc(item.getCodigoTuss()))
                     .append("</ans:codigoProcedimento>\n");
-            sb.append("        <ans:descricaoProcedimento>").append(esc(item.getProcedimento().getDescricao()))
+            sb.append("        <ans:descricaoProcedimento>").append(esc(item.getDescricao()))
                     .append("</ans:descricaoProcedimento>\n");
             sb.append("        <ans:quantidadeExecutada>").append(item.getQuantidade())
                     .append("</ans:quantidadeExecutada>\n");

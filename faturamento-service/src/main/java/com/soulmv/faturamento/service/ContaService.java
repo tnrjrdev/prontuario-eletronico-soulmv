@@ -1,14 +1,15 @@
 package com.soulmv.faturamento.service;
 
+import com.soulmv.faturamento.client.ProcedimentoTussDto;
 import com.soulmv.faturamento.dto.request.ContaRequest;
 import com.soulmv.faturamento.dto.request.ItemContaRequest;
+import com.soulmv.faturamento.dto.response.ContaEstatisticasResponse;
 import com.soulmv.faturamento.dto.response.ContaResponse;
 import com.soulmv.faturamento.dto.response.GuiaTissResponse;
 import com.soulmv.faturamento.entity.Atendimento;
 import com.soulmv.faturamento.entity.ContaHospitalar;
 import com.soulmv.faturamento.entity.GuiaTiss;
 import com.soulmv.faturamento.entity.ItemConta;
-import com.soulmv.faturamento.entity.ProcedimentoTuss;
 import com.soulmv.faturamento.enums.StatusConta;
 import com.soulmv.faturamento.exception.BusinessException;
 import com.soulmv.faturamento.exception.ResourceNotFoundException;
@@ -17,7 +18,6 @@ import com.soulmv.faturamento.repository.AtendimentoRepository;
 import com.soulmv.faturamento.repository.ContaHospitalarRepository;
 import com.soulmv.faturamento.repository.GuiaTissRepository;
 import com.soulmv.faturamento.repository.ItemContaRepository;
-import com.soulmv.faturamento.repository.ProcedimentoTussRepository;
 import com.soulmv.faturamento.service.faturamento.TissXmlBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,14 +28,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContaService {
 
     private final ContaHospitalarRepository repository;
     private final AtendimentoRepository atendimentoRepository;
-    private final ProcedimentoTussRepository procedimentoRepository;
+    private final ProcedimentoTussLookupService procedimentoLookup;
     private final ItemContaRepository itemContaRepository;
     private final GuiaTissRepository guiaRepository;
     private final FaturamentoMapper mapper;
@@ -43,14 +45,14 @@ public class ContaService {
 
     public ContaService(ContaHospitalarRepository repository,
                         AtendimentoRepository atendimentoRepository,
-                        ProcedimentoTussRepository procedimentoRepository,
+                        ProcedimentoTussLookupService procedimentoLookup,
                         ItemContaRepository itemContaRepository,
                         GuiaTissRepository guiaRepository,
                         FaturamentoMapper mapper,
                         TissXmlBuilder tissXmlBuilder) {
         this.repository = repository;
         this.atendimentoRepository = atendimentoRepository;
-        this.procedimentoRepository = procedimentoRepository;
+        this.procedimentoLookup = procedimentoLookup;
         this.itemContaRepository = itemContaRepository;
         this.guiaRepository = guiaRepository;
         this.mapper = mapper;
@@ -93,21 +95,22 @@ public class ContaService {
         if (!conta.getStatus().permiteEdicaoItens()) {
             throw new BusinessException("A conta não está aberta para edição de itens.", HttpStatus.CONFLICT);
         }
-        ProcedimentoTuss procedimento = procedimentoRepository.findById(request.procedimentoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Procedimento TUSS", request.procedimentoId()));
-        if (!procedimento.isAtivo()) {
-            throw new BusinessException("Procedimento inativo: " + procedimento.getCodigoTuss());
+        ProcedimentoTussDto procedimento = procedimentoLookup.buscar(request.procedimentoId());
+        if (!procedimento.ativo()) {
+            throw new BusinessException("Procedimento inativo: " + procedimento.codigoTuss());
         }
 
         BigDecimal valorUnitario = request.valorUnitario() != null
-                ? request.valorUnitario() : procedimento.getValorReferencia();
+                ? request.valorUnitario() : procedimento.valorReferencia();
         if (valorUnitario == null) {
             throw new BusinessException("Informe o valor unitário (o procedimento não tem valor de referência).");
         }
 
         ItemConta item = ItemConta.builder()
                 .conta(conta)
-                .procedimento(procedimento)
+                .procedimentoId(procedimento.id())
+                .codigoTuss(procedimento.codigoTuss())
+                .descricao(procedimento.descricao())
                 .quantidade(request.quantidade())
                 .valorUnitario(valorUnitario)
                 .build();
@@ -170,6 +173,20 @@ public class ContaService {
         return guiaRepository.findById(guiaId)
                 .map(GuiaTiss::getXml)
                 .orElseThrow(() -> new ResourceNotFoundException("Guia TISS", guiaId));
+    }
+
+    @Transactional(readOnly = true)
+    public ContaEstatisticasResponse estatisticas() {
+        long total = repository.count();
+        BigDecimal valorTotal = repository.somaValorTotal();
+
+        Map<String, Long> contasPorStatus = new LinkedHashMap<>();
+        Map<String, BigDecimal> valorPorStatus = new LinkedHashMap<>();
+        for (StatusConta s : StatusConta.values()) {
+            contasPorStatus.put(s.name(), repository.countByStatus(s));
+            valorPorStatus.put(s.name(), repository.somaValorTotalPorStatus(s));
+        }
+        return new ContaEstatisticasResponse(total, valorTotal, contasPorStatus, valorPorStatus);
     }
 
     private ContaHospitalar obter(Long id) {

@@ -19,9 +19,6 @@ public interface FaturamentoMapper {
     @Mapping(target = "convenioNome", source = "convenio.nome")
     ContaResponse toResponse(ContaHospitalar conta);
 
-    @Mapping(target = "procedimentoId", source = "procedimento.id")
-    @Mapping(target = "codigoTuss", source = "procedimento.codigoTuss")
-    @Mapping(target = "descricao", source = "procedimento.descricao")
     ItemContaResponse toResponse(ItemConta item);
 
     @Mapping(target = "contaId", source = "conta.id")
