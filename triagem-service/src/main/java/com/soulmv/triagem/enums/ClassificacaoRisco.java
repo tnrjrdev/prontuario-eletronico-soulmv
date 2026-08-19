@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.enums;
+package com.soulmv.triagem.enums;
 
 /**
  * Classificação de risco (protocolo de Manchester), da maior para a menor

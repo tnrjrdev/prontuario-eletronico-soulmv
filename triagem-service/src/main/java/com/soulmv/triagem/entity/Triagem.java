@@ -1,15 +1,12 @@
-package com.soulmv.hospitalar.entity;
+package com.soulmv.triagem.entity;
 
-import com.soulmv.hospitalar.enums.ClassificacaoRisco;
+import com.soulmv.triagem.enums.ClassificacaoRisco;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +16,11 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * Triagem com classificação de risco (Manchester). Relação 1:1 com o atendimento.
+ * Triagem com classificação de risco (Manchester). Relação 1:1 com o atendimento
+ * (dono: atendimento-service — validado via Feign, não relação JPA local).
  */
 @Entity
-@Table(name = "triagens")
+@Table(name = "triagens", uniqueConstraints = @UniqueConstraint(columnNames = "atendimento_id"))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,13 +28,13 @@ import java.time.LocalDateTime;
 @Builder
 public class Triagem extends BaseEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "atendimento_id", nullable = false, unique = true)
-    private Atendimento atendimento;
+    @Column(name = "atendimento_id", nullable = false)
+    private Long atendimentoId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "enfermeiro_id", nullable = false)
-    private Usuario enfermeiro;
+    @Column(name = "enfermeiro_id", nullable = false)
+    private Long enfermeiroId;
+
+    private String enfermeiroNome;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

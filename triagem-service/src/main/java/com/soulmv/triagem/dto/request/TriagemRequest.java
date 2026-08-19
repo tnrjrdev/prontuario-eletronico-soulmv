@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.dto.request;
+package com.soulmv.triagem.dto.request;
 
-import com.soulmv.hospitalar.enums.ClassificacaoRisco;
+import com.soulmv.triagem.enums.ClassificacaoRisco;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 

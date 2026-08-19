@@ -74,6 +74,12 @@ spring:
           predicates:
             - Path=/api/atendimentos,/api/atendimentos/{id},/api/atendimentos/{id}/status,/api/atendimentos/{id}/leito,/api/atendimentos/{id}/alta
 
+        # Triagem Service (Onda 5, segunda fatia)
+        - id: triagem-service
+          uri: lb://triagem-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/triagem
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080

@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.dto.response;
+package com.soulmv.triagem.dto.response;
 
-import com.soulmv.hospitalar.enums.ClassificacaoRisco;
+import com.soulmv.triagem.enums.ClassificacaoRisco;
 
 import java.time.LocalDateTime;
 
