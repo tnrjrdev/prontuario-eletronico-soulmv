@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.dto.request;
+package com.soulmv.evolucao.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

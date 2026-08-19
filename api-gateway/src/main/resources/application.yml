@@ -86,6 +86,12 @@ spring:
           predicates:
             - Path=/api/atendimentos/{atendimentoId}/sinais-vitais
 
+        # Evolução Clínica Service (Onda 5, quarta fatia)
+        - id: evolucao-service
+          uri: lb://evolucao-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/evolucoes
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080

@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.repository;
+package com.soulmv.evolucao.repository;
 
-import com.soulmv.hospitalar.entity.EvolucaoClinica;
+import com.soulmv.evolucao.entity.EvolucaoClinica;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

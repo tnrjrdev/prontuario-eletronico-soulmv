@@ -1,8 +1,8 @@
-package com.soulmv.hospitalar.enums;
+package com.soulmv.evolucao.enums;
 
 /**
  * Origem da evolução clínica. Regra: ENFERMEIRO só registra ENFERMAGEM;
- * MÉDICO só registra MEDICA. Ninguém edita evolução de outra origem.
+ * MÉDICO só registra MEDICA — determinado pela role no JWT, não pelo cliente.
  */
 public enum TipoEvolucao {
     MEDICA,
