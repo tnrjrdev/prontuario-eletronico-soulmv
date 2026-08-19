@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "catalogo-service", path = "/api/leitos", configuration = FeignAuthConfig.class)
+@FeignClient(name = "catalogo-service", contextId = "leitoClient", path = "/api/leitos", configuration = FeignAuthConfig.class)
 public interface LeitoClient {
 
     /**
