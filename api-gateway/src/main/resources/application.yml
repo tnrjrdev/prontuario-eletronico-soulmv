@@ -67,8 +67,7 @@ spring:
         # Atendimento Service (Onda 5, primeira fatia) — só a fila/status/leito/alta do
         # PRÓPRIO atendimento. Os subrecursos clínicos aninhados (/api/atendimentos/{id}/
         # anamnese|diagnosticos|sinais-vitais|evolucoes|prescricoes|exames) NÃO batem
-        # nesse predicate (Path com {id} casa só um segmento) e continuam caindo no
-        # monolito-route abaixo — esses domínios ainda não foram extraídos.
+        # nesse predicate (Path com {id} casa só um segmento) e têm rotas próprias abaixo.
         - id: atendimento-service
           uri: lb://atendimento-service
           predicates:
@@ -103,6 +102,18 @@ spring:
           uri: lb://diagnostico-service
           predicates:
             - Path=/api/atendimentos/{atendimentoId}/diagnosticos
+
+        # Prescrição Service (Onda 5, sétima fatia)
+        - id: prescricao-service
+          uri: lb://prescricao-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/prescricoes,/api/prescricoes,/api/prescricoes/{id}/status,/api/itens-prescricao/{itemId}/administracoes
+
+        # Exames Service (Onda 5, oitava fatia)
+        - id: exames-service
+          uri: lb://exames-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/exames,/api/exames,/api/exames/{id}/status,/api/exames/{id}/resultado,/api/exames/{id}/laudo
 
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
