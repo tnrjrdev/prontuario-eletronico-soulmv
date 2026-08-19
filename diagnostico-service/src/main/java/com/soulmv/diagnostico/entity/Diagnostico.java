@@ -1,13 +1,10 @@
-package com.soulmv.hospitalar.entity;
+package com.soulmv.diagnostico.entity;
 
-import com.soulmv.hospitalar.enums.TipoDiagnostico;
+import com.soulmv.diagnostico.enums.TipoDiagnostico;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +15,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * Diagnóstico (CID-10) atribuído pelo médico a um atendimento.
+ * Diagnóstico (CID-10) atribuído pelo médico a um atendimento. Atendimento e CID-10
+ * são donos de outros microsserviços (atendimento-service, catalogo-service) —
+ * validados via Feign, sem relação JPA local.
  */
 @Entity
 @Table(name = "diagnosticos")
@@ -29,21 +28,24 @@ import java.time.LocalDateTime;
 @Builder
 public class Diagnostico extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "atendimento_id", nullable = false)
-    private Atendimento atendimento;
+    @Column(name = "atendimento_id", nullable = false)
+    private Long atendimentoId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cid10_id", nullable = false)
-    private Cid10 cid10;
+    @Column(name = "cid10_id", nullable = false)
+    private Long cid10Id;
+
+    private String cid10Codigo;
+
+    private String cid10Descricao;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoDiagnostico tipo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "medico_id", nullable = false)
-    private Usuario medico;
+    @Column(name = "medico_id", nullable = false)
+    private Long medicoId;
+
+    private String medicoNome;
 
     private String observacao;
 

@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.dto.request;
+package com.soulmv.diagnostico.dto.request;
 
-import com.soulmv.hospitalar.enums.TipoDiagnostico;
+import com.soulmv.diagnostico.enums.TipoDiagnostico;
 import jakarta.validation.constraints.NotNull;
 
 public record DiagnosticoRequest(

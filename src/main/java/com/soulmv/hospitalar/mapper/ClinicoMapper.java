@@ -1,15 +1,11 @@
 package com.soulmv.hospitalar.mapper;
 
 import com.soulmv.hospitalar.dto.response.AdministracaoResponse;
-import com.soulmv.hospitalar.dto.response.AnamneseResponse;
-import com.soulmv.hospitalar.dto.response.DiagnosticoResponse;
 import com.soulmv.hospitalar.dto.response.ItemPrescricaoResponse;
 import com.soulmv.hospitalar.dto.response.PrescricaoResponse;
 import com.soulmv.hospitalar.dto.response.ResultadoExameResponse;
 import com.soulmv.hospitalar.dto.response.SolicitacaoExameResponse;
 import com.soulmv.hospitalar.entity.AdministracaoMedicamento;
-import com.soulmv.hospitalar.entity.Anamnese;
-import com.soulmv.hospitalar.entity.Diagnostico;
 import com.soulmv.hospitalar.entity.ItemPrescricao;
 import com.soulmv.hospitalar.entity.Prescricao;
 import com.soulmv.hospitalar.entity.ResultadoExame;
@@ -22,19 +18,6 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface ClinicoMapper {
-
-    @Mapping(target = "atendimentoId", source = "atendimento.id")
-    @Mapping(target = "medicoId", source = "medico.id")
-    @Mapping(target = "medicoNome", source = "medico.nomeCompleto")
-    AnamneseResponse toResponse(Anamnese anamnese);
-
-    @Mapping(target = "atendimentoId", source = "atendimento.id")
-    @Mapping(target = "cid10Id", source = "cid10.id")
-    @Mapping(target = "cid10Codigo", source = "cid10.codigo")
-    @Mapping(target = "cid10Descricao", source = "cid10.descricao")
-    @Mapping(target = "medicoId", source = "medico.id")
-    @Mapping(target = "medicoNome", source = "medico.nomeCompleto")
-    DiagnosticoResponse toResponse(Diagnostico diagnostico);
 
     @Mapping(target = "atendimentoId", source = "atendimento.id")
     @Mapping(target = "pacienteId", source = "atendimento.paciente.id")

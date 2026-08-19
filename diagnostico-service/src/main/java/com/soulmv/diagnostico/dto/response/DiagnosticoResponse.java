@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.dto.response;
+package com.soulmv.diagnostico.dto.response;
 
-import com.soulmv.hospitalar.enums.TipoDiagnostico;
+import com.soulmv.diagnostico.enums.TipoDiagnostico;
 
 import java.time.LocalDateTime;
 

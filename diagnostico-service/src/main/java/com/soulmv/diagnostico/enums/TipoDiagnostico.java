@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.enums;
+package com.soulmv.diagnostico.enums;
 
 public enum TipoDiagnostico {
     PRINCIPAL,
