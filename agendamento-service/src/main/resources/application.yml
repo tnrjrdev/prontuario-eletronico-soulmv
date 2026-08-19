@@ -32,7 +32,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,circuitbreakers
   endpoint:
     health:
       show-details: always
@@ -40,3 +40,45 @@ management:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+# Timeouts das chamadas Feign (camada de "timeouts" da resiliência)
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 5000
+
+# Circuit breakers do Resilience4j para paciente-service/iam-service/catalogo-service
+resilience4j:
+  circuitbreaker:
+    instances:
+      paciente:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        # 404 é resultado de negócio normal (pacienteId inválido), não indisponibilidade.
+        ignore-exceptions:
+          - com.soulmv.agendamento.exception.ResourceNotFoundException
+      iam:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        # profissional inexistente/inativo/sem role clínica é regra de negócio, não falha.
+        ignore-exceptions:
+          - com.soulmv.agendamento.exception.BusinessException
+      catalogo:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        ignore-exceptions:
+          - com.soulmv.agendamento.exception.ResourceNotFoundException

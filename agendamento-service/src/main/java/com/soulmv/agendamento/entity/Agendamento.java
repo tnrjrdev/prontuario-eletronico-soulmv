@@ -31,22 +31,36 @@ import java.time.LocalDateTime;
 @Builder
 public class Agendamento extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Paciente paciente;
+    /**
+     * Paciente/profissional/setor/convênio são donos de outros microsserviços
+     * (paciente-service, iam-service, catalogo-service) — não são mais relações JPA
+     * locais. O nome é um retrato de quando o agendamento foi criado/reagendado
+     * (validado via Feign nesse momento); se o cadastro de origem mudar depois, a
+     * agenda já marcada não muda retroativamente — comportamento aceitável (e até
+     * desejável) para uma tela de agenda, e evita 1 chamada HTTP por linha ao listar.
+     */
+    @Column(nullable = false)
+    private Long pacienteId;
+
+    @Column(nullable = false)
+    private String pacienteNome;
 
     /** Profissional (corpo clínico) que atenderá o compromisso. */
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "profissional_id", nullable = false)
-    private Usuario profissional;
+    @Column(nullable = false)
+    private Long profissionalId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "setor_id", nullable = false)
-    private Setor setor;
+    @Column(nullable = false)
+    private String profissionalNome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "convenio_id")
-    private Convenio convenio;
+    @Column(nullable = false)
+    private Long setorId;
+
+    @Column(nullable = false)
+    private String setorNome;
+
+    private Long convenioId;
+
+    private String convenioNome;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

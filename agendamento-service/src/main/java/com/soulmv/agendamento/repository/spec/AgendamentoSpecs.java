@@ -19,21 +19,21 @@ public final class AgendamentoSpecs {
         if (profissionalId == null) {
             return null;
         }
-        return (root, query, cb) -> cb.equal(root.get("profissional").get("id"), profissionalId);
+        return (root, query, cb) -> cb.equal(root.get("profissionalId"), profissionalId);
     }
 
     public static Specification<Agendamento> pacienteId(Long pacienteId) {
         if (pacienteId == null) {
             return null;
         }
-        return (root, query, cb) -> cb.equal(root.get("paciente").get("id"), pacienteId);
+        return (root, query, cb) -> cb.equal(root.get("pacienteId"), pacienteId);
     }
 
     public static Specification<Agendamento> setorId(Long setorId) {
         if (setorId == null) {
             return null;
         }
-        return (root, query, cb) -> cb.equal(root.get("setor").get("id"), setorId);
+        return (root, query, cb) -> cb.equal(root.get("setorId"), setorId);
     }
 
     public static Specification<Agendamento> status(StatusAgendamento status) {
