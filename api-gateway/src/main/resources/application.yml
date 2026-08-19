@@ -64,6 +64,16 @@ spring:
           predicates:
             - Path=/api/auditoria/**
 
+        # Atendimento Service (Onda 5, primeira fatia) — só a fila/status/leito/alta do
+        # PRÓPRIO atendimento. Os subrecursos clínicos aninhados (/api/atendimentos/{id}/
+        # anamnese|diagnosticos|sinais-vitais|evolucoes|prescricoes|exames) NÃO batem
+        # nesse predicate (Path com {id} casa só um segmento) e continuam caindo no
+        # monolito-route abaixo — esses domínios ainda não foram extraídos.
+        - id: atendimento-service
+          uri: lb://atendimento-service
+          predicates:
+            - Path=/api/atendimentos,/api/atendimentos/{id},/api/atendimentos/{id}/status,/api/atendimentos/{id}/leito,/api/atendimentos/{id}/alta
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080
