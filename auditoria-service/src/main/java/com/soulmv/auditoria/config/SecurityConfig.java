@@ -1,5 +1,6 @@
 package com.soulmv.auditoria.config;
 
+import com.soulmv.auditoria.security.InternalTokenFilter;
 import com.soulmv.auditoria.security.JwtAuthenticationFilter;
 import com.soulmv.auditoria.security.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
@@ -33,14 +34,18 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/h2-console/**"
+            "/h2-console/**",
+            "/api/auditoria/eventos"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final InternalTokenFilter internalTokenFilter;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+                          InternalTokenFilter internalTokenFilter,
                           RestAuthenticationEntryPoint authenticationEntryPoint) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.internalTokenFilter = internalTokenFilter;
         this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
@@ -54,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
+                .addFilterBefore(internalTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 // Permite o frame do H2 console (perfil dev)
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));

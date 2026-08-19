@@ -1,6 +1,10 @@
 server:
   port: 8000 # Porta que o Gateway vai rodar
 
+app:
+  security:
+    internal-audit-token: ${AUDITORIA_INTERNAL_TOKEN:f1e2d3c4b5a6-audit-9988776655}
+
 spring:
   application:
     name: api-gateway
