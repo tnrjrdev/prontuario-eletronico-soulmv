@@ -2,3 +2,6 @@ target/
 
 # H2 Database files
 db/
+
+*.log
+*.txt
