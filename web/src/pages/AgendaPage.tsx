@@ -241,6 +241,7 @@ function AgendamentoModal({
   const profissionaisQ = useProfissionais()
   const setoresQ = useQuery({ queryKey: ['setores'], queryFn: () => catalogoService.setores() })
   const conveniosQ = useQuery({ queryKey: ['convenios'], queryFn: () => catalogoService.convenios() })
+  const toast = useToast()
 
   const [form, setForm] = useState({
     pacienteId: agendamento?.pacienteId ? String(agendamento.pacienteId) : '',
@@ -256,7 +257,10 @@ function AgendamentoModal({
   const set = (k: keyof typeof form, v: string | number) => setForm((f) => ({ ...f, [k]: v }))
 
   const submit = () => {
-    if (!form.pacienteId || !form.profissionalId || !form.setorId || !form.dataHora) return
+    if (!form.pacienteId) return toast.error('Selecione um paciente na busca antes de salvar.')
+    if (!form.profissionalId) return toast.error('Selecione um profissional.')
+    if (!form.setorId) return toast.error('Selecione um setor.')
+    if (!form.dataHora) return toast.error('Informe a data e hora da marcação.')
     onSubmit({
       pacienteId: Number(form.pacienteId),
       profissionalId: Number(form.profissionalId),
