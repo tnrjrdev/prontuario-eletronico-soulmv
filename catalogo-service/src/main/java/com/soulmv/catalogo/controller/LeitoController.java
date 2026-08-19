@@ -3,6 +3,7 @@ package com.soulmv.catalogo.controller;
 import com.soulmv.catalogo.dto.request.AtualizarStatusRequest;
 import com.soulmv.catalogo.dto.request.LeitoRequest;
 import com.soulmv.catalogo.dto.request.LeitoStatusRequest;
+import com.soulmv.catalogo.dto.response.LeitoEstatisticasResponse;
 import com.soulmv.catalogo.dto.response.LeitoResponse;
 import com.soulmv.catalogo.service.LeitoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +53,12 @@ public class LeitoController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    @GetMapping("/estatisticas")
+    @Operation(summary = "Totais de leitos por status e taxa de ocupação (uso interno: dashboard-service)")
+    public ResponseEntity<LeitoEstatisticasResponse> estatisticas() {
+        return ResponseEntity.ok(service.estatisticas());
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cria um leito")
@@ -69,7 +76,7 @@ public class LeitoController {
     }
 
     @PatchMapping("/{id}/status")
-    @PreAuthorize("hasAnyRole('ADMIN','ENFERMEIRO')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMEIRO','MEDICO')")
     @Operation(summary = "Altera o status operacional do leito (LIVRE, OCUPADO, ...)")
     public ResponseEntity<LeitoResponse> atualizarStatus(@PathVariable Long id,
                                                          @Valid @RequestBody LeitoStatusRequest request) {

@@ -1,14 +1,12 @@
 package com.soulmv.dashboard.service;
 
+import com.soulmv.dashboard.client.ContaEstatisticasDto;
+import com.soulmv.dashboard.client.LeitoEstatisticasDto;
 import com.soulmv.dashboard.dto.response.AtendimentosDashboardResponse;
 import com.soulmv.dashboard.dto.response.FaturamentoDashboardResponse;
 import com.soulmv.dashboard.dto.response.OcupacaoLeitosResponse;
 import com.soulmv.dashboard.enums.StatusAtendimento;
-import com.soulmv.dashboard.enums.StatusConta;
-import com.soulmv.dashboard.enums.StatusLeito;
 import com.soulmv.dashboard.repository.AtendimentoRepository;
-import com.soulmv.dashboard.repository.ContaHospitalarRepository;
-import com.soulmv.dashboard.repository.LeitoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,39 +17,38 @@ import java.util.Map;
 
 /**
  * Consultas agregadas para os painéis gerenciais.
+ *
+ * <p>Ocupação (leitos) e faturamento (contas) buscam os dados via Feign nos serviços
+ * donos (catalogo-service / faturamento-service) — antes liam direto do banco H2
+ * compartilhado, um acoplamento por dados que só funcionava porque todo mundo ainda
+ * apontava para o mesmo arquivo. Atendimentos continua lendo o banco compartilhado
+ * diretamente: o domínio de Atendimento ainda não foi extraído do monólito (é a
+ * "Frente 5" do plano de migração), então não existe hoje nenhum microsserviço dono
+ * desses dados para chamar via API.</p>
  */
 @Service
 public class DashboardService {
 
-    private final LeitoRepository leitoRepository;
     private final AtendimentoRepository atendimentoRepository;
-    private final ContaHospitalarRepository contaRepository;
+    private final LeitoEstatisticasLookupService leitoLookup;
+    private final ContaEstatisticasLookupService contaLookup;
 
-    public DashboardService(LeitoRepository leitoRepository,
-                            AtendimentoRepository atendimentoRepository,
-                            ContaHospitalarRepository contaRepository) {
-        this.leitoRepository = leitoRepository;
+    public DashboardService(AtendimentoRepository atendimentoRepository,
+                            LeitoEstatisticasLookupService leitoLookup,
+                            ContaEstatisticasLookupService contaLookup) {
         this.atendimentoRepository = atendimentoRepository;
-        this.contaRepository = contaRepository;
+        this.leitoLookup = leitoLookup;
+        this.contaLookup = contaLookup;
     }
 
-    @Transactional(readOnly = true)
     public OcupacaoLeitosResponse ocupacaoLeitos() {
-        long total = leitoRepository.count();
-        long ativos = leitoRepository.countByAtivoTrue();
-        long ocupados = leitoRepository.countByStatus(StatusLeito.OCUPADO);
-        long livres = leitoRepository.countByStatus(StatusLeito.LIVRE);
+        LeitoEstatisticasDto dto = leitoLookup.estatisticas();
 
-        Map<String, Long> porStatus = new LinkedHashMap<>();
-        for (StatusLeito s : StatusLeito.values()) {
-            porStatus.put(s.name(), leitoRepository.countByStatus(s));
-        }
-
-        double taxa = ativos > 0
-                ? BigDecimal.valueOf(ocupados * 100.0 / ativos).setScale(2, RoundingMode.HALF_UP).doubleValue()
+        double taxa = dto.ativos() > 0
+                ? BigDecimal.valueOf(dto.ocupados() * 100.0 / dto.ativos()).setScale(2, RoundingMode.HALF_UP).doubleValue()
                 : 0.0;
 
-        return new OcupacaoLeitosResponse(total, ativos, ocupados, livres, taxa, porStatus);
+        return new OcupacaoLeitosResponse(dto.total(), dto.ativos(), dto.ocupados(), dto.livres(), taxa, dto.porStatus());
     }
 
     @Transactional(readOnly = true)
@@ -64,17 +61,8 @@ public class DashboardService {
         return new AtendimentosDashboardResponse(total, porStatus);
     }
 
-    @Transactional(readOnly = true)
     public FaturamentoDashboardResponse faturamento() {
-        long total = contaRepository.count();
-        BigDecimal valorTotal = contaRepository.somaValorTotal();
-
-        Map<String, Long> contasPorStatus = new LinkedHashMap<>();
-        Map<String, BigDecimal> valorPorStatus = new LinkedHashMap<>();
-        for (StatusConta s : StatusConta.values()) {
-            contasPorStatus.put(s.name(), contaRepository.countByStatus(s));
-            valorPorStatus.put(s.name(), contaRepository.somaValorTotalPorStatus(s));
-        }
-        return new FaturamentoDashboardResponse(total, valorTotal, contasPorStatus, valorPorStatus);
+        ContaEstatisticasDto dto = contaLookup.estatisticas();
+        return new FaturamentoDashboardResponse(dto.total(), dto.valorTotal(), dto.contasPorStatus(), dto.valorPorStatus());
     }
 }

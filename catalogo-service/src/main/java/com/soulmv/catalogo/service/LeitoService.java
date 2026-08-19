@@ -3,9 +3,11 @@ package com.soulmv.catalogo.service;
 import com.soulmv.catalogo.dto.request.AtualizarStatusRequest;
 import com.soulmv.catalogo.dto.request.LeitoRequest;
 import com.soulmv.catalogo.dto.request.LeitoStatusRequest;
+import com.soulmv.catalogo.dto.response.LeitoEstatisticasResponse;
 import com.soulmv.catalogo.dto.response.LeitoResponse;
 import com.soulmv.catalogo.entity.Leito;
 import com.soulmv.catalogo.entity.Setor;
+import com.soulmv.catalogo.enums.StatusLeito;
 import com.soulmv.catalogo.exception.BusinessException;
 import com.soulmv.catalogo.exception.ResourceNotFoundException;
 import com.soulmv.catalogo.mapper.ParametroMapper;
@@ -16,6 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 public class LeitoService {
@@ -73,9 +78,24 @@ public class LeitoService {
         return mapper.toResponse(repository.save(leito));
     }
 
+    /**
+     * Usado inclusive pelo atendimento-service (internação/alta) via Feign. A transição
+     * pra OCUPADO é a única com risco real de corrida (dois atendimentos "roubando" o
+     * mesmo leito) — por isso a precondição fica aqui, no dono do dado, verificada na
+     * mesma transação da escrita, e não no chamador remoto.
+     */
     @Transactional
     public LeitoResponse atualizarStatus(Long id, LeitoStatusRequest request) {
         Leito leito = obter(id);
+        if (request.status() == StatusLeito.OCUPADO) {
+            if (!leito.isAtivo()) {
+                throw new BusinessException("Leito inativo.");
+            }
+            if (leito.getStatus() != StatusLeito.LIVRE) {
+                throw new BusinessException("Leito indisponível (status atual: " + leito.getStatus() + ").",
+                        HttpStatus.CONFLICT);
+            }
+        }
         leito.setStatus(request.status());
         return mapper.toResponse(repository.save(leito));
     }
@@ -85,6 +105,20 @@ public class LeitoService {
         Leito leito = obter(id);
         leito.setAtivo(request.ativo());
         return mapper.toResponse(repository.save(leito));
+    }
+
+    @Transactional(readOnly = true)
+    public LeitoEstatisticasResponse estatisticas() {
+        long total = repository.count();
+        long ativos = repository.countByAtivoTrue();
+        long ocupados = repository.countByStatus(StatusLeito.OCUPADO);
+        long livres = repository.countByStatus(StatusLeito.LIVRE);
+
+        Map<String, Long> porStatus = new LinkedHashMap<>();
+        for (StatusLeito s : StatusLeito.values()) {
+            porStatus.put(s.name(), repository.countByStatus(s));
+        }
+        return new LeitoEstatisticasResponse(total, ativos, ocupados, livres, porStatus);
     }
 
     private void validarIdentificadorUnico(Long setorId, String identificador) {
