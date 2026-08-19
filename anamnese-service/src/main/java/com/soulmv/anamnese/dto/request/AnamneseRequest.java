@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.dto.request;
+package com.soulmv.anamnese.dto.request;
 
 public record AnamneseRequest(
         String historiaDoencaAtual,

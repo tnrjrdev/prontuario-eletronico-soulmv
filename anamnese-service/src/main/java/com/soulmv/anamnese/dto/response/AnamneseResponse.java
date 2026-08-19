@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.dto.response;
+package com.soulmv.anamnese.dto.response;
 
 import java.time.LocalDateTime;
 

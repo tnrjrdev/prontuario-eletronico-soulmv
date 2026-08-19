@@ -1,13 +1,10 @@
-package com.soulmv.hospitalar.entity;
+package com.soulmv.anamnese.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,10 +14,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * Anamnese do atendimento (1:1). Registrada pelo médico.
+ * Anamnese do atendimento (1:1, dono: atendimento-service — validado via Feign).
  */
 @Entity
-@Table(name = "anamneses")
+@Table(name = "anamneses", uniqueConstraints = @UniqueConstraint(columnNames = "atendimento_id"))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,13 +25,13 @@ import java.time.LocalDateTime;
 @Builder
 public class Anamnese extends BaseEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "atendimento_id", nullable = false, unique = true)
-    private Atendimento atendimento;
+    @Column(name = "atendimento_id", nullable = false)
+    private Long atendimentoId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "medico_id", nullable = false)
-    private Usuario medico;
+    @Column(name = "medico_id", nullable = false)
+    private Long medicoId;
+
+    private String medicoNome;
 
     @Lob
     private String historiaDoencaAtual;

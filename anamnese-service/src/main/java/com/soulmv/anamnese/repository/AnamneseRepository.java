@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.repository;
+package com.soulmv.anamnese.repository;
 
-import com.soulmv.hospitalar.entity.Anamnese;
+import com.soulmv.anamnese.entity.Anamnese;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

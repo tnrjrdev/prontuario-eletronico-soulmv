@@ -92,6 +92,12 @@ spring:
           predicates:
             - Path=/api/atendimentos/{atendimentoId}/evolucoes
 
+        # Anamnese Service (Onda 5, quinta fatia)
+        - id: anamnese-service
+          uri: lb://anamnese-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/anamnese
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080
