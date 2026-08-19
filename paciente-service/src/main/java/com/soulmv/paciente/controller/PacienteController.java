@@ -26,8 +26,8 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/pacientes")
 @SecurityRequirement(name = "bearerAuth")
-@PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO')")
-@Tag(name = "Pacientes", description = "Cadastro demográfico de pacientes (RECEPÇÃO/MÉDICO/ENFERMAGEM)")
+@PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO','ADMIN')")
+@Tag(name = "Pacientes", description = "Cadastro demográfico de pacientes (RECEPÇÃO/MÉDICO/ENFERMAGEM/ADMIN)")
 public class PacienteController {
 
     private final PacienteService pacienteService;
@@ -47,7 +47,6 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('RECEPCAO','MEDICO','ENFERMEIRO','ADMIN')")
     @Operation(summary = "Busca um paciente por id")
     public ResponseEntity<PacienteResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(pacienteService.buscarPorId(id));
