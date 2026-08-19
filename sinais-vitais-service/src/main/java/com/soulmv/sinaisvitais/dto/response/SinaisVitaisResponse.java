@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.dto.response;
+package com.soulmv.sinaisvitais.dto.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

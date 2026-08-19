@@ -1,4 +1,4 @@
-package com.soulmv.hospitalar.dto.request;
+package com.soulmv.sinaisvitais.dto.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

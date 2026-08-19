@@ -80,6 +80,12 @@ spring:
           predicates:
             - Path=/api/atendimentos/{atendimentoId}/triagem
 
+        # Sinais Vitais Service (Onda 5, terceira fatia)
+        - id: sinais-vitais-service
+          uri: lb://sinais-vitais-service
+          predicates:
+            - Path=/api/atendimentos/{atendimentoId}/sinais-vitais
+
         # Rota padrão: tudo o mais ainda vai para o Monólito (porta 8080)
         - id: monolito-route
           uri: http://localhost:8080

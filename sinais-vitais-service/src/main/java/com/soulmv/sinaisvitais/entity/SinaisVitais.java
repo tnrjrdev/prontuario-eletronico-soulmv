@@ -1,10 +1,7 @@
-package com.soulmv.hospitalar.entity;
+package com.soulmv.sinaisvitais.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Registro pontual de sinais vitais de um atendimento (pode haver vários).
+ * Registro pontual de sinais vitais de um atendimento (pode haver vários). Atendimento
+ * e quem registrou são donos de outros microsserviços — id + nome denormalizado, sem
+ * relação JPA local.
  */
 @Entity
 @Table(name = "sinais_vitais")
@@ -27,13 +26,13 @@ import java.time.LocalDateTime;
 @Builder
 public class SinaisVitais extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "atendimento_id", nullable = false)
-    private Atendimento atendimento;
+    @Column(name = "atendimento_id", nullable = false)
+    private Long atendimentoId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "registrado_por_id", nullable = false)
-    private Usuario registradoPor;
+    @Column(name = "registrado_por_id", nullable = false)
+    private Long registradoPorId;
+
+    private String registradoPorNome;
 
     private Integer pressaoSistolica;
     private Integer pressaoDiastolica;

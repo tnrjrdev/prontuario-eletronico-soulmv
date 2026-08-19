@@ -1,6 +1,6 @@
-package com.soulmv.hospitalar.repository;
+package com.soulmv.sinaisvitais.repository;
 
-import com.soulmv.hospitalar.entity.SinaisVitais;
+import com.soulmv.sinaisvitais.entity.SinaisVitais;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

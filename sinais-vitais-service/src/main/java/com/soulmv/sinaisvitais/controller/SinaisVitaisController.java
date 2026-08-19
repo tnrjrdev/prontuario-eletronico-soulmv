@@ -1,8 +1,10 @@
-package com.soulmv.hospitalar.controller;
+package com.soulmv.sinaisvitais.controller;
 
-import com.soulmv.hospitalar.dto.request.SinaisVitaisRequest;
-import com.soulmv.hospitalar.dto.response.SinaisVitaisResponse;
-import com.soulmv.hospitalar.service.SinaisVitaisService;
+import com.soulmv.sinaisvitais.dto.request.SinaisVitaisRequest;
+import com.soulmv.sinaisvitais.dto.response.SinaisVitaisResponse;
+import com.soulmv.sinaisvitais.security.JwtService;
+import com.soulmv.sinaisvitais.service.SinaisVitaisService;
+import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,11 +12,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,9 +29,11 @@ import java.util.List;
 public class SinaisVitaisController {
 
     private final SinaisVitaisService service;
+    private final JwtService jwtService;
 
-    public SinaisVitaisController(SinaisVitaisService service) {
+    public SinaisVitaisController(SinaisVitaisService service, JwtService jwtService) {
         this.service = service;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -37,8 +41,11 @@ public class SinaisVitaisController {
     @Operation(summary = "Registra sinais vitais do atendimento")
     public ResponseEntity<SinaisVitaisResponse> registrar(@PathVariable Long atendimentoId,
                                                           @Valid @RequestBody SinaisVitaisRequest request,
-                                                          Authentication authentication) {
-        SinaisVitaisResponse criado = service.registrar(atendimentoId, request, authentication.getName());
+                                                          @RequestHeader("Authorization") String authorization) {
+        String token = authorization.startsWith("Bearer ") ? authorization.substring(7) : authorization;
+        Claims claims = jwtService.extrairTodasClaims(token);
+        SinaisVitaisResponse criado = service.registrar(atendimentoId, request,
+                claims.get("uid", Long.class), claims.get("nome", String.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
