@@ -27,15 +27,21 @@ faturamento**, com trilha de auditoria/LGPD e portais por perfil.
 
 ## Arquitetura
 
-Backend em **camadas** (Controller → Service → Repository) com DTOs na borda,
-MapStruct para conversão, tratamento global de exceções (RFC 7807), segurança
-**JWT stateless** e autorização por perfil (`@PreAuthorize`) + escopo de dados.
+Backend em migração incremental (*strangler fig*) de monólito para
+**microsserviços**: Eureka (descoberta), Config Server, API Gateway e 15
+serviços de negócio já extraídos, com o monólito ainda respondendo pelas
+poucas rotas não migradas. Cada serviço segue **camadas** (Controller →
+Service → Repository) com DTOs na borda, MapStruct para conversão,
+tratamento global de exceções (RFC 7807), segurança **JWT stateless** e
+autorização por perfil (`@PreAuthorize`); chamadas entre serviços usam
+OpenFeign + Resilience4j (circuit breaker).
 
 ```
-Browser ─► React (Vite/Nginx) ─► /api ─► Spring Boot ─► PostgreSQL
+Browser ─► React (Vite/Nginx) ─► API Gateway (:8000) ─┬─► microsserviços (Eureka) ─► H2/PostgreSQL
+                                                         └─► Monólito (:8080, rotas remanescentes)
                                           │
-                                          ├─ Security (JWT, RBAC)
-                                          ├─ Auditoria (interceptor append-only)
+                                          ├─ Security (JWT, RBAC) — em cada serviço
+                                          ├─ Auditoria (auditoria-service, append-only)
                                           └─ Storage (laudos em filesystem/volume)
 ```
 
@@ -82,15 +88,87 @@ Parar: `docker compose down` (use `-v` para apagar os volumes de dados).
 
 ### Opção B — Desenvolvimento local
 
-**Backend** (perfil `dev` = H2 em memória, sem setup de banco):
-```bash
-./mvnw spring-boot:run          # Linux/Mac
-.\mvnw.cmd spring-boot:run       # Windows
-```
-- Swagger: http://localhost:8080/swagger-ui.html
-- Console H2: http://localhost:8080/h2-console (JDBC `jdbc:h2:mem:hospitalardb`, user `sa`, sem senha)
+O backend hoje é uma **malha de microsserviços** (Eureka + Config Server +
+Gateway + 15 serviços de negócio), com o antigo monólito ainda de pé como
+destino padrão do Gateway para as rotas que não foram extraídas. Todos
+compartilham o mesmo arquivo H2 (`db/hospitalar-v2`) em modo dev.
 
-**Frontend** (proxy `/api` → 8080):
+Pré-requisitos: **Java 21**, **Maven** (`mvn` no PATH — veja nota abaixo) e
+**Node 18+**.
+
+#### Opção B.1 — Script (recomendado no Windows)
+
+> Execute a partir da **raiz do repositório** (onde este README está) — o
+> caminho `scripts\start-all.ps1` é relativo. Se estiver em outra pasta, use
+> `cd F:\Dev\Prontuario_eletronico` antes, ou o caminho completo do script.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\start-all.ps1
+```
+
+Abre uma janela de terminal por processo, na ordem certa (Eureka/Config →
+microsserviços → Gateway → Monólito → Frontend). Flags úteis:
+
+```powershell
+# sem o monólito e sem o frontend
+powershell -ExecutionPolicy Bypass -File scripts\start-all.ps1 -SemMonolito -SemFrontend
+
+# se "mvn" não for reconhecido (adiciona o Maven ao PATH só dentro do script)
+# exemplo válido nesta máquina:
+powershell -ExecutionPolicy Bypass -File scripts\start-all.ps1 -MavenBin "C:\Users\taryj\apache-maven-3.9.6\bin"
+```
+
+Para derrubar tudo de novo (identifica os processos pela porta, não pelo PID):
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\stop-all.ps1
+```
+
+#### Opção B.2 — Manual, um serviço por vez
+
+Se `mvn` não estiver no PATH da sessão (erro *"não é reconhecido..."*), defina
+antes de cada comando (PowerShell não usa `export` nem `&&`):
+```powershell
+$env:PATH = "C:\caminho\para\maven\bin;$env:PATH"
+```
+
+Cada linha abaixo roda em **primeiro plano** — abra uma aba/janela de
+terminal nova para cada serviço, na ordem:
+
+```powershell
+# 1) Descoberta e configuração (primeiro; os demais dependem deles)
+cd eureka-server;  mvn spring-boot:run    # :8761
+cd config-server;  mvn spring-boot:run    # :8888
+
+# 2) Microsserviços de negócio (qualquer ordem entre si)
+cd iam-service;            mvn spring-boot:run   # :8081
+cd paciente-service;       mvn spring-boot:run   # :8082
+cd catalogo-service;       mvn spring-boot:run   # :8083
+cd agendamento-service;    mvn spring-boot:run   # :8085
+cd faturamento-service;    mvn spring-boot:run   # :8086
+cd dashboard-service;      mvn spring-boot:run   # :8087
+cd auditoria-service;      mvn spring-boot:run   # :8088
+cd atendimento-service;    mvn spring-boot:run   # :8089
+cd triagem-service;        mvn spring-boot:run   # :8090
+cd sinais-vitais-service;  mvn spring-boot:run   # :8091
+cd evolucao-service;       mvn spring-boot:run   # :8092
+cd anamnese-service;       mvn spring-boot:run   # :8093
+cd diagnostico-service;    mvn spring-boot:run   # :8094
+cd prescricao-service;     mvn spring-boot:run   # :8095
+cd exames-service;         mvn spring-boot:run   # :8096
+
+# 3) Gateway (depois dos serviços, para rotear certo)
+cd api-gateway;    mvn spring-boot:run    # :8000
+
+# 4) Monólito (ainda é o destino padrão do Gateway para rotas não extraídas)
+.\mvnw.cmd spring-boot:run                # :8080
+```
+
+Cada serviço leva de 10 a 90 segundos para subir e se registrar no Eureka
+(painel em http://localhost:8761). Swagger de cada serviço fica em
+`http://localhost:<porta>/swagger-ui.html`; pelo Gateway, tudo é acessado via
+`http://localhost:8000/api/...`.
+
+**Frontend** (proxy `/api` → Gateway, porta 8000):
 ```bash
 cd web
 npm install
